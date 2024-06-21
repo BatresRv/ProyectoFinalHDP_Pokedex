@@ -77,10 +77,19 @@ class Pokemon {
             typesContainer.appendChild(typeCircle);
         });
 
+        const selectButton = document.createElement('button');
+        selectButton.className = 'select-btn';
+        selectButton.textContent = 'Seleccionar';
+        selectButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            this.selectPokemon();
+        });
+
         pokemonCard.appendChild(pokemonImage);
         pokemonCard.appendChild(pokemonName);
         pokemonCard.appendChild(idContainer);
         pokemonCard.appendChild(typesContainer);
+        pokemonCard.appendChild(selectButton);
 
         return pokemonCard;
     }
@@ -146,6 +155,11 @@ class Pokemon {
 
         card.appendChild(detailsContainer);
     }
+
+    selectPokemon() {
+        console.log(`¡Has seleccionado a ${this.name}!`);
+    }
 }
 
 export default Pokemon;
+
