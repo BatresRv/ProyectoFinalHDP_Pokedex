@@ -1,0 +1,126 @@
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+    background-color: #333;
+    color: #fff;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 1rem;
+}
+
+.footer-section h4 {
+    margin-bottom: 1rem;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+}
+
+.footer-section img.moving-image {
+    max-width: 100px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 2rem 0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    footer {
+        flex-direction: column;
+    }
+
+    .footer-section {
+        margin: 1rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .footer-section {
+        text-align: center;
+    }
+
+    .footer-section img.moving-image {
+        display: none;
+    }
+    .footer-section img.moving-image:hover{
+        box-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00; 
+    transition: all 0.5s ease-in-out;
+
+
+    }
+
+}
+
+.clas-text-h4:hover{
+    color: #FFCC00; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00; 
+    transition: all 0.5s ease-in-out;
+    height: 25px;
+    width: 200px;
+    text-align: center;
+}
+
+
+
+.ul-foot{
+    text-align: center;
+    margin: 10px;
+    padding: 5px;
+    width: 70px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(40, 58, 47, 0.5);
+    background-color: rgb(31, 24, 29);
+    cursor: pointer; /* MANO COMO CURSOR*/
+    
+}
+
+.ul-foot:hover{
+    text-align: center;
+    color: #FFCC00; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00; 
+}
+    
+
+hr{
+    width: 100%;
+    height: 1px;
+    border: 10;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+}
+
+
