@@ -80,6 +80,8 @@ class Pokemon {
         const selectButton = document.createElement('button');
         selectButton.className = 'select-btn';
         selectButton.textContent = 'Seleccionar';
+        selectButton.style.display = 'none'; // Inicialmente oculto
+
         selectButton.addEventListener('click', (event) => {
             event.stopPropagation();
             this.selectPokemon();
@@ -100,6 +102,7 @@ class Pokemon {
             card.style.width = '150px';
             card.style.height = 'auto';
             card.querySelector('.details').remove();
+            card.querySelector('.select-btn').style.display = 'none'; // Ocultar el botón cuando se contrae
             return;
         }
 
@@ -154,6 +157,8 @@ class Pokemon {
         detailsContainer.appendChild(movesList);
 
         card.appendChild(detailsContainer);
+
+        card.querySelector('.select-btn').style.display = 'block'; // Mostrar el botón cuando se expande
     }
 
     selectPokemon() {
@@ -162,4 +167,3 @@ class Pokemon {
 }
 
 export default Pokemon;
-
