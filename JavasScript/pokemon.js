@@ -48,28 +48,32 @@ class Pokemon {
         }
     }
 
-    render() {
+    createPokemonCard(pokemon, expandable = true, showRemoveButton = false) {
         const pokemonCard = document.createElement('div');
-        pokemonCard.className = `pokemon-card ${this.types[0].type.name}`;
-        pokemonCard.addEventListener('click', () => this.expandCard(pokemonCard));
+        pokemonCard.className = `pokemon-card ${pokemon.types[0].type.name}`;
+        pokemonCard.style.backgroundColor = getTypeColor(pokemon.types[0].type.name);
+
+        if (expandable) {
+            pokemonCard.addEventListener('click', () => this.expandCard(pokemonCard));
+        }
 
         const pokemonImage = document.createElement('img');
-        pokemonImage.src = this.sprites.front_default;
-        pokemonImage.alt = this.name;
+        pokemonImage.src = pokemon.sprites.front_default;
+        pokemonImage.alt = pokemon.name;
 
         const pokemonName = document.createElement('h3');
-        pokemonName.textContent = this.name;
+        pokemonName.textContent = pokemon.name;
 
         const idContainer = document.createElement('div');
         idContainer.className = 'id-container';
         const pokemonId = document.createElement('span');
-        pokemonId.textContent = this.id;
+        pokemonId.textContent = pokemon.id;
         idContainer.appendChild(pokemonId);
 
         const typesContainer = document.createElement('div');
         typesContainer.className = 'types-container';
 
-        this.types.forEach(type => {
+        pokemon.types.forEach(type => {
             const typeCircle = document.createElement('div');
             typeCircle.className = 'type-circle';
             typeCircle.textContent = type.type.name;
@@ -93,7 +97,22 @@ class Pokemon {
         pokemonCard.appendChild(typesContainer);
         pokemonCard.appendChild(selectButton);
 
+        if (showRemoveButton) {
+            const removeButton = document.createElement('button');
+            removeButton.className = 'remove-btn';
+            removeButton.textContent = 'Eliminar';
+            removeButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                this.removePokemon(pokemon.id);
+            });
+            pokemonCard.appendChild(removeButton);
+        }
+
         return pokemonCard;
+    }
+
+    render() {
+        return this.createPokemonCard(this);
     }
 
     async expandCard(card) {
@@ -162,7 +181,57 @@ class Pokemon {
     }
 
     selectPokemon() {
-        console.log(`¡Has seleccionado a ${this.name}!`);
+        const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
+        const messageElement = document.getElementById('messages');
+    
+        function showAlert(message) {
+            messageElement.innerHTML = message;
+            messageElement.classList.add('show');
+            setTimeout(() => {
+                messageElement.classList.remove('show');
+            }, 3000); // Ocultar después de 3 segundos
+        }
+        
+        // Limpiar mensajes previos
+        messageElement.innerHTML = '';
+    
+        if (selectedPokemons.length < 6 && !selectedPokemons.some(pokemon => pokemon.id === this.id)) {
+            selectedPokemons.push({
+                id: this.id,
+                name: this.name,
+                sprites: this.sprites,
+                types: this.types
+            });
+            localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
+            this.renderSelectedPokemons();
+            showAlert('Pokémon seleccionado correctamente.');
+        } else if (selectedPokemons.some(pokemon => pokemon.id === this.id)) {
+            showAlert('Este Pokémon ya está seleccionado.');
+        } else {
+            showAlert('Ya has seleccionado 6 Pokémon.');
+        }
+    }
+
+    removePokemon(pokemonId) {
+        let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
+        selectedPokemons = selectedPokemons.filter(pokemon => pokemon.id !== pokemonId);
+        localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
+        this.renderSelectedPokemons();
+    }
+
+    renderSelectedPokemons() {
+        const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
+        const selectedContainer = document.querySelector('.selected-pokemons');
+ 
+        
+        selectedContainer.innerHTML = '';
+    
+        selectedPokemons.forEach(pokemon => {
+            // Crea una nueva instancia de Pokemon para usar el método createPokemonCard
+            const pokemonInstance = new Pokemon(pokemon.id, pokemon.name, pokemon.sprites, pokemon.types);
+            const pokemonCard = pokemonInstance.createPokemonCard(pokemon, false, true); // No expandible, mostrar botón de eliminación
+            selectedContainer.appendChild(pokemonCard);
+        });
     }
 }
 

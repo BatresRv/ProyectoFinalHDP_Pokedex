@@ -310,3 +310,20 @@ nav ul li a:hover {
 .select-btn:active {
     transform: translateY(1px);
 }
+
+.alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: none;
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.alert-container.show {
+    display: block;
+}
