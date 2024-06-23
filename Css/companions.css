@@ -1,5 +1,6 @@
 
 footer {
+    margin-top: 20vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -92,8 +93,6 @@ hr {
     text-align: center;
 }
 
-
-
 .ul-foot{
     text-align: center;
     margin: 10px;
@@ -124,3 +123,7 @@ hr{
 }
 
 
+.selected-pokemons {
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+}
