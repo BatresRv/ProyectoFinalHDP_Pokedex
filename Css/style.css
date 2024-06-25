@@ -1,0 +1,32 @@
+/*ESTILO ENTRNADORES*/
+/* Estilos para el contenedor de entrenadores */
+#entrenadores-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Estilos para cada entrenador */
+.entrenador {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: left;
+}
+
+/* Estilos para el botón de asignar Pokémon */
+.asignar-pokemon-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.asignar-pokemon-btn:hover {
+    background-color: #0056b3;
+}

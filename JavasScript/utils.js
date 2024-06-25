@@ -23,3 +23,5 @@ function getTypeColor(typeName) {
 }
 
 export { getTypeColor };
+
+
