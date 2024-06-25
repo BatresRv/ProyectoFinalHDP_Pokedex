@@ -1,9 +1,5 @@
 import { getTypeColor } from './utils.js';
 
-const dbName = 'PokedexDB';
-const storeName = 'trainers';
-let db;
-
 class Pokemon {
     constructor(id, name, sprites, types) {
         this.id = id;
@@ -52,7 +48,7 @@ class Pokemon {
         }
     }
 
-    createPokemonCard(pokemon, expandable = true, showRemoveButton = false, showAddCompanionButton = false) {
+    createPokemonCard(pokemon, expandable = true, showRemoveButton = false) {
         const pokemonCard = document.createElement('div');
         pokemonCard.className = `pokemon-card ${pokemon.types[0].type.name}`;
         pokemonCard.style.backgroundColor = getTypeColor(pokemon.types[0].type.name);
@@ -112,41 +108,7 @@ class Pokemon {
             pokemonCard.appendChild(removeButton);
         }
 
-        if (showAddCompanionButton) {
-            const addCompanionButton = document.createElement('button');
-            addCompanionButton.className = 'add-companion-btn';
-            addCompanionButton.textContent = 'Agregar a acompañante';
-            addCompanionButton.addEventListener('click', (event) => {
-                event.stopPropagation();
-                this.addCompanion(pokemon.id);
-            });
-            pokemonCard.appendChild(addCompanionButton);
-        }
-
         return pokemonCard;
-    }
-
-    createTrainerCard(trainer) {
-        const trainerCard = document.createElement('div');
-        trainerCard.className = 'trainer-card';
-        trainerCard.dataset.trainerId = trainer.id;
-
-        const trainerName = document.createElement('h3');
-        trainerName.textContent = `Entrenador ${trainer.id}`;
-        trainerCard.appendChild(trainerName);
-
-        const pokemonList = document.createElement('div');
-        pokemonList.className = 'pokemon-list';
-
-        trainer.pokemon.forEach(pokemon => {
-            const pokemonInstance = new Pokemon(pokemon.id, pokemon.name, pokemon.sprites, pokemon.types);
-            const pokemonCard = pokemonInstance.createPokemonCard(pokemon, false, true); // No expandible, mostrar botón de eliminación
-            pokemonList.appendChild(pokemonCard);
-        });
-
-        trainerCard.appendChild(pokemonList);
-
-        return trainerCard;
     }
 
     render() {
@@ -221,7 +183,7 @@ class Pokemon {
     selectPokemon() {
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         const messageElement = document.getElementById('messages');
-
+    
         function showAlert(message) {
             messageElement.innerHTML = message;
             messageElement.classList.add('show');
@@ -229,10 +191,10 @@ class Pokemon {
                 messageElement.classList.remove('show');
             }, 3000); // Ocultar después de 3 segundos
         }
-
+        
         // Limpiar mensajes previos
         messageElement.innerHTML = '';
-
+    
         if (selectedPokemons.length < 6 && !selectedPokemons.some(pokemon => pokemon.id === this.id)) {
             selectedPokemons.push({
                 id: this.id,
@@ -248,58 +210,6 @@ class Pokemon {
         } else {
             showAlert('Ya has seleccionado 6 Pokémon.');
         }
-
-        // Mostrar u ocultar el botón 'Agregar a acompañante' basado en la cantidad de Pokémon seleccionados
-        const addCompanionButtons = document.querySelectorAll('.add-companion-btn');
-        if (selectedPokemons.length === 6) {
-            addCompanionButtons.forEach(button => {
-                button.style.display = 'block';
-            });
-        } else {
-            addCompanionButtons.forEach(button => {
-                button.style.display = 'none';
-            });
-        }
-    }
-
-    async addCompanion(pokemonId) {
-        const trainerId = prompt('Ingresa el ID del entrenador para agregar este Pokémon:');
-        if (!trainerId) return;
-
-        const transaction = db.transaction([storeName], 'readwrite');
-        const objectStore = transaction.objectStore(storeName);
-
-        const getTrainerRequest = objectStore.get(Number(trainerId));
-
-        getTrainerRequest.onsuccess = (event) => {
-            const trainer = event.target.result;
-            if (!trainer) {
-                alert('Entrenador no encontrado.');
-                return;
-            }
-
-            trainer.pokemon.push({
-                id: this.id,
-                name: this.name,
-                sprites: this.sprites,
-                types: this.types
-            });
-
-            const updateTrainerRequest = objectStore.put(trainer);
-
-            updateTrainerRequest.onsuccess = (event) => {
-                console.log(`Se ha agregado ${this.name} al entrenador.`);
-                displayTrainers();
-            };
-
-            updateTrainerRequest.onerror = (event) => {
-                console.error('Error al actualizar el entrenador:', event.target.errorCode);
-            };
-        };
-
-        getTrainerRequest.onerror = (event) => {
-            console.error('Error al obtener el entrenador:', event.target.errorCode);
-        };
     }
 
     removePokemon(pokemonId) {
@@ -312,77 +222,19 @@ class Pokemon {
     renderSelectedPokemons() {
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         const selectedContainer = document.querySelector('.selected-pokemons');
-
+ 
+        
         selectedContainer.innerHTML = '';
-
+    
         selectedPokemons.forEach(pokemon => {
             // Crea una nueva instancia de Pokemon para usar el método createPokemonCard
             const pokemonInstance = new Pokemon(pokemon.id, pokemon.name, pokemon.sprites, pokemon.types);
-            const pokemonCard = pokemonInstance.createPokemonCard(pokemon, false, true, true); // No expandible, mostrar botón de eliminación y botón de agregar a acompañante
+            const pokemonCard = pokemonInstance.createPokemonCard(pokemon, false, true); // No expandible, mostrar botón de eliminación
             selectedContainer.appendChild(pokemonCard);
-        });
-
-        // Ocultar el botón 'Agregar a acompañante' en los Pokémon que no están seleccionados
-        const allPokemonCards = document.querySelectorAll('.pokemon-card');
-        allPokemonCards.forEach(card => {
-            const pokemonId = parseInt(card.querySelector('.id-container span').textContent);
-            const found = selectedPokemons.some(pokemon => pokemon.id === pokemonId);
-            if (!found) {
-                card.querySelector('.add-companion-btn').style.display = 'none';
-            }
         });
     }
 }
 
-function openDB() {
-    const request = indexedDB.open(dbName, 1);
-
-    request.onerror = (event) => {
-        console.error('Error al abrir la base de datos:', event.target.errorCode);
-    };
-
-    request.onsuccess = (event) => {
-        console.log('Base de datos abierta exitosamente.');
-        db = event.target.result;
-        displayTrainers();
-    };
-
-    request.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        const objectStore = db.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true });
-        objectStore.createIndex('name', 'name', { unique: false });
-        objectStore.createIndex('pokemon', 'pokemon', { unique: false });
-
-        console.log(`Base de datos ${dbName} creada y lista para su uso.`);
-    };
-}
-
-function displayTrainers() {
-    const transaction = db.transaction([storeName], 'readonly');
-    const objectStore = transaction.objectStore(storeName);
-
-    const trainersList = document.getElementById('trainers-list');
-    trainersList.innerHTML = '';
-
-    const request = objectStore.getAll();
-
-    request.onsuccess = (event) => {
-        const trainers = event.target.result;
-        trainers.forEach(trainer => {
-            const trainerInstance = new Pokemon(trainer.id, `Entrenador ${trainer.id}`, [], []); // Crear instancia de entrenador con datos mínimos
-            const trainerCard = trainerInstance.createTrainerCard(trainer);
-            trainersList.appendChild(trainerCard);
-        });
-    };
-
-    request.onerror = (event) => {
-        console.error('Error al obtener los entrenadores:', event.target.errorCode);
-    };
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    openDB();
-});
 export default Pokemon;
 
 
