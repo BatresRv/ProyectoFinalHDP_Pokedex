@@ -384,3 +384,5 @@ document.addEventListener('DOMContentLoaded', () => {
     openDB();
 });
 export default Pokemon;
+
+

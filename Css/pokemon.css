@@ -352,3 +352,11 @@ nav ul li a:hover {
     background-color: #45a049; /* Color de fondo al pasar el mouse */
 }
 
+body{
+    
+    background: linear-gradient(to right, #e0cc78,
+     #ebdcd2, #d69b98, #b9a5e7,
+      #98d8d8);
+
+}
+
