@@ -3,6 +3,7 @@ body {
     background-color: #f2f2f2;
     margin: 0;
     padding: 0;
+                                                
 }
   
 .container {
@@ -181,7 +182,8 @@ nav ul li a:hover {
     justify-content: center;
     margin-top: 5px;
 }
-  
+
+
 /* Detalles de la tarjeta expandida */
 .details {
     margin-top: 10px;
