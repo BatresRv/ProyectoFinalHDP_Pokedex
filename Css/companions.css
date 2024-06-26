@@ -1,3 +1,15 @@
+@keyframes moveToTrainer {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(100vw - 50px)); /* Ajusta el valor para que coincida con la posición final */
+    }
+}
+
+.pokemon-img-moving {
+    animation: moveToTrainer 1s forwards;
+}
 
 footer {
     margin-top: 20vh;

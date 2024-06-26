@@ -1,4 +1,5 @@
 import Pokemon from './pokemon.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     initializeTrainers();
     renderSelectedPokemons();
@@ -7,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initializeTrainers() {
     const initialTrainers = [
-        { id: 1, name: 'Orlando',userName: 'Carlitos', pokemons: [] },
+        { id: 1, name: 'Orlando', pokemons: [] },
         { id: 2, name: 'Marvin', pokemons: [] },
         { id: 3, name: 'Antolino', pokemons: [] },
         { id: 4, name: 'Alisson', pokemons: [] },
@@ -39,6 +40,7 @@ function createSelectedPokemonCard(pokemon) {
     const img = document.createElement('img');
     img.src = pokemon.sprites.front_default;
     img.alt = pokemon.name;
+    img.className = 'pokemon-img';
 
     const name = document.createElement('h3');
     name.textContent = pokemon.name;
@@ -96,7 +98,6 @@ function createTrainerCard(trainer) {
         const img = document.createElement('img');
         img.src = pokemon.sprites.front_default;
         img.alt = pokemon.name;
-        img.className = 'trainer-pokemon-image';
 
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Eliminar';
@@ -135,8 +136,12 @@ function assignPokemonToTrainer(trainerId) {
             localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
             localStorage.setItem('trainers', JSON.stringify(trainers));
 
-            renderSelectedPokemons();
-            renderTrainers();
+            const pokemonImg = document.querySelector(`img[alt="${selectedPokemon.name}"]`);
+            pokemonImg.classList.add('pokemon-img-moving');
+
+            pokemonImg.addEventListener('animationend', () => {
+                location.reload(); // Refresca la página después de la animación
+            }, { once: true });
         } else {
             alert('Selección no válida');
         }
@@ -147,10 +152,16 @@ function assignPokemonToTrainer(trainerId) {
 
 function removePokemonFromTrainer(trainerId, pokemonIndex) {
     const trainers = JSON.parse(localStorage.getItem('trainers')) || [];
+    const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     const trainer = trainers.find(tr => tr.id === trainerId);
+    
     if (trainer && trainer.pokemons.length > pokemonIndex) {
-        trainer.pokemons.splice(pokemonIndex, 1);
+        const [removedPokemon] = trainer.pokemons.splice(pokemonIndex, 1);
+        selectedPokemons.push(removedPokemon);
+
+        localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
         localStorage.setItem('trainers', JSON.stringify(trainers));
-        renderTrainers();
+
+        location.reload(); // Refresca la página después de eliminar un Pokémon
     }
 }
