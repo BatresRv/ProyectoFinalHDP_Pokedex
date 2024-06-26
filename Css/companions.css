@@ -222,3 +222,23 @@ label, input {
     }
 }
 
+
+.gif, .no-gif{
+    display: none;
+    width: 40px;
+    height: 40px;
+}
+.efecto:hover .gif {
+    display: flex;
+    width: 40px;
+    height: 40px;
+}
+
+.efecto:hover .no-gif {
+    display: none;
+    width: 40px;
+    height: 40px;
+}
+
+
+

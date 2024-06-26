@@ -152,3 +152,49 @@ main {
 }
 
 
+
+:root {
+    --border-angle: 0turn;
+}
+#nav-animacion-li{
+    color: white;
+    text-shadow: 0 1px 0 #f7f7f7;
+    border: solid 10px transparent;
+    border-radius: 10px;
+    --main-bg: conic-gradient(
+        from var(--border-angle),
+        #213,
+        rgb(13, 13, 43) 5%,
+        #112 60%,
+        #213 95%
+    );
+    --gradient-border: conic-gradient(from var(--border-angle), transparent 25%, rgb(192, 212, 76), #f03 99%, transparent);
+    background:
+        var(--main-bg) padding-box,
+        var(--gradient-border) border-box,
+        var(--main-bg) border-box;
+    background-position: center center;
+    animation: bg-spin 3s linear infinite;
+
+}
+
+#nav-animacion-li:hover {
+    animation-play-state: paused;
+}
+
+@keyframes bg-spin {
+    to {
+        --border-angle: 1turn;
+    }
+}
+
+@property --border-angle {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0turn;
+}
+
+
+#run-img{
+    
+}
