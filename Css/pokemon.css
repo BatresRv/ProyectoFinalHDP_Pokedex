@@ -3,6 +3,7 @@ body {
     background-color: #f2f2f2;
     margin: 0;
     padding: 0;
+    background: url('../Imgs/fondo.avif') no-repeat center center fixed;
 }
   
 .container {
@@ -360,3 +361,10 @@ body{
 
 }
 
+#gif-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
