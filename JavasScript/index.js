@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Lógica para la página principal
         const pokedex = new Pokedex();
         pokedex.drawPokedex();
+        
     } else if (currentPage.includes('companions.html')) {
         // Lógica para la página de acompañantes
         Pokemon.prototype.renderSelectedPokemons();
