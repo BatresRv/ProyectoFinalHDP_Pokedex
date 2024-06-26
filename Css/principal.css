@@ -6,7 +6,6 @@ body {
     padding: 0;
     background: url('../Imgs/fondo.avif') no-repeat center center fixed;
     background-size: cover;
-    color: white;
     overflow-x: hidden; 
 }
 
@@ -150,5 +149,4 @@ main {
         transform: translateX(-20%);
     }
 }
-
 
