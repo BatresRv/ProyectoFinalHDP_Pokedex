@@ -239,6 +239,138 @@ label, input {
     width: 40px;
     height: 40px;
 }
+/* seccion cartas de entrenadores ptetetetetettte paca paca
+paca paca paca*/
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #3B4CCA;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav {
+    background-color: #FFCC01;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: #3B4CCA;
+}
+
+main {
+    padding: 20px;
+}
+
+h1#typing {
+    font-size: 2em;
+    margin: 20px 0;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: #333;
+}
+
+.trainers-container {
+    background-color: white;
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    flex: 1;
+    min-width: 45%;
+}
+
+
+
+.trainers-container {
+    order: 2;
+}
+
+ .trainer-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+ .trainer-pokemon-image {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+
+.trainer-card h3 {
+    margin: 0 0 10px;
+}
+
+.trainer-card span {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.trainer-card button {
+    background-color: #3B4CCA;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.trainer-card button:hover {
+    background-color: #2C3E8A;
+}
+
+.trainer-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.trainer-card ul li {
+    background-color: #f1f1f1;
+    padding: 5px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
 
 
 
