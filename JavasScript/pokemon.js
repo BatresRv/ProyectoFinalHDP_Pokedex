@@ -213,9 +213,15 @@ class Pokemon {
             setTimeout(() => {
                 gifContainer.style.display = 'none';     
                 showAlert('Pokémon seleccionado correctamente.');
+                location.reload();
             }, 3000);
 
             this.renderSelectedPokemons();
+            setTimeout(() => {
+                
+                location.reload();
+            }, 5000);
+            
         } else if (selectedPokemons.some(pokemon => pokemon.id === this.id)) {
 
             
@@ -226,11 +232,19 @@ class Pokemon {
                 gifContainer.style.display = 'none'; 
                 
                 showAlert('Este Pokémon ya está seleccionado.');
+                location.reload();
             }, 3000);
+
+            setTimeout(() => {
+                
+                location.reload();
+            }, 5000);
             
+
         } else {
             showAlert('Ya has seleccionado 6 Pokémon.');
         }
+        
     }
 
     removePokemon(pokemonId) {
