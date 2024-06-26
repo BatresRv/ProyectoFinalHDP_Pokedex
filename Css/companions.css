@@ -1,4 +1,4 @@
-
+/*FOOTER ESTILOS*/
 footer {
     margin-top: 20vh;
     display: flex;
@@ -130,31 +130,30 @@ hr{
 
 .pokedex-container {
     padding: 17px 40px; 
-    background-color: #FF4500; /* Reemplaza con el valor de colores.$color-nami */
-    box-shadow: 0 0 8px #000000; /* Reemplaza con el valor de colores.$color-negro */
+    background-color: #FF4500; 
+    box-shadow: 0 0 8px #000000; 
     text-transform: uppercase;
     font-size: 14px;
     transition: all 0.05s ease;
     cursor: pointer;
     line-height: 1.5;
-    font-family: 'Times New Roman', serif; /* Reemplaza con el valor de tipografia-tex.$font-ancient-text */
+    font-family: 'Times New Roman', serif; 
 
     padding: 20px;
-    border-radius: 50px; /* Asumiendo que .borde__redondeado__50px es border-radius: 50px; */
+    border-radius: 50px; 
 }
 
 .pokedex-container:hover {
     line-height: 3px;
-    background-color: #FF4500; /* Reemplaza con el valor de colores.$color-nami */
-    color: #FFA500; /* Reemplaza con el valor de colores.$color-secundario */
-    box-shadow: 0 7px 29px 0 #000000; /* Reemplaza con el valor de colores.$color-negro */
+    background-color: #FF4500; 
+    color: #FFA500; 
+    box-shadow: 0 7px 29px 0 #000000; 
 }
-
 .pokedex-container:active {
     line-height: 3px;
-    background-color: #FF4500; /* Reemplaza con el valor de colores.$color-nami */
-    color: #FFA500; /* Reemplaza con el valor de colores.$color-secundario */
-    box-shadow: 0 0 0 0 #000000; /* Reemplaza con el valor de colores.$color-negro */
+    background-color: #FF4500; 
+    color: #FFA500; 
+    box-shadow: 0 0 0 0 #000000;
     transform: translate(18px);
     transition: 100ms;
 }
@@ -193,51 +192,39 @@ label, input {
 }
 
 
-/*ESTYLO PARA BOTONES DE LA INTERFAS MIS ACOMPANATES*/
-.add-companion-btn, .remove-btn {
-    text-align: center;
-    margin: 5px;
-    padding: 10px 20px;
-    width: auto;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-    color: rgb(14, 2, 2);
-    font-weight: bold;
-    border: none;
-    cursor: pointer; /* MANO COMO CURSOR */
-    transition: box-shadow 0.3s ease, transform 0.3s ease, background-image 0.3s ease;
+/*ESTYLO PARA BOTONES DE LA INTERFAS MIS ACOMPANATE TEMATICA DE POKEMS*/
+.add-companion-btn {
+    background-color: #ffcc00; 
+    color: #fff; 
+    border: 2px solid #ff0000; /* Borde rojo */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px 20px; 
+    font-family: 'Pokemon', sans-serif; 
+    font-size: 16px; 
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Transiciones  */
 }
 
-.add-companion-btn, .remove-btn:hover {
-    background-image: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%);
-    animation: slidebg 5s linear infinite;
-    color: rgb(3, 2, 2);
-  
+.add-companion-btn:hover {
+    background-color: #ff9900; 
+    transform: scale(1.1); 
 }
 
-@keyframes slidebg {
-    to {
-        background-position: 20vw;
-    }
+.remove-btn:hover {
+    background-color: #ff0000;
+    color: #fff; 
+    border: 2px solid #000; 
+    border-radius: 10px; 
+    padding: 10px 20px; 
+    font-family: 'Pokemon', sans-serif; /* Fuente temática de Pokémon */
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s, transform 0.3s; /* Transiciones  */
 }
 
-
-.gif, .no-gif{
-    display: none;
-    width: 40px;
-    height: 40px;
-}
-.efecto:hover .gif {
-    display: flex;
-    width: 40px;
-    height: 40px;
-}
-
-.efecto:hover .no-gif {
-    display: none;
-    width: 40px;
-    height: 40px;
+.remove-btn:hover {
+    background-color: #cc0000;
+    transform: scale(1.1); 
 }
 /* seccion cartas de entrenadores ptetetetetettte paca paca
 paca paca paca*/
