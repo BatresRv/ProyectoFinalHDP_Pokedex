@@ -362,31 +362,3 @@ body{
 }
 
 
-:root {
-    --border-angle: 0turn;
-}
-
-
-#nav-animacion-li:hover {
-    animation-play-state: paused;
-}
-
-@keyframes bg-spin {
-    to {
-        --border-angle: 1turn;
-    }
-}
-
-@property --border-angle {
-    syntax: "<angle>";
-    inherits: true;
-    initial-value: 0turn;
-}
-
-#gif-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000; 
-}
