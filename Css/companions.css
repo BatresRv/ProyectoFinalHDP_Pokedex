@@ -8,7 +8,7 @@
 }
 
 .pokemon-img-moving {
-    animation: moveToTrainer 4s forwards;
+    animation: moveToTrainer 5s forwards;
 }
 
 footer {
