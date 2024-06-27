@@ -1,3 +1,4 @@
+import { addTrainer, getTrainers, updateTrainer, deleteTrainer } from './db.js';
 import Pokemon from './pokemon.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -6,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTrainers();
 });
 
-function initializeTrainers() {
+async function initializeTrainers() {
     const initialTrainers = [
         { id: 1, name: 'Orlando', pokemons: [] },
         { id: 2, name: 'Marvin', pokemons: [] },
@@ -15,12 +16,14 @@ function initializeTrainers() {
         { id: 5, name: 'Yosselin', pokemons: [] },
     ];
 
-    if (!localStorage.getItem('trainers')) {
-        localStorage.setItem('trainers', JSON.stringify(initialTrainers));
+    const trainers = await getTrainers();
+    if (trainers.length === 0) {
+        initialTrainers.forEach(trainer => addTrainer(trainer));
     }
 }
 
-function renderSelectedPokemons() {
+async function renderSelectedPokemons() {
+    // Asumiremos que selectedPokemons se manejan aún en localStorage
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     const selectedContainer = document.querySelector('.selected-pokemons');
 
@@ -65,8 +68,8 @@ function removePokemon(pokemonId) {
     renderSelectedPokemons();
 }
 
-function renderTrainers() {
-    const trainers = JSON.parse(localStorage.getItem('trainers')) || [];
+async function renderTrainers() {
+    const trainers = await getTrainers();
     const trainersContainer = document.querySelector('.trainers-container');
     trainersContainer.innerHTML = '';
 
@@ -119,9 +122,9 @@ function createTrainerCard(trainer) {
     return trainerCard;
 }
 
-function assignPokemonToTrainer(trainerId) {
+async function assignPokemonToTrainer(trainerId) {
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
-    const trainers = JSON.parse(localStorage.getItem('trainers')) || [];
+    const trainers = await getTrainers();
     const trainer = trainers.find(tr => tr.id === trainerId);
 
     if (selectedPokemons.length > 0) {
@@ -134,7 +137,7 @@ function assignPokemonToTrainer(trainerId) {
             trainer.pokemons.push(selectedPokemon);
 
             localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
-            localStorage.setItem('trainers', JSON.stringify(trainers));
+            updateTrainer(trainer);
 
             const pokemonImg = document.querySelector(`img[alt="${selectedPokemon.name}"]`);
             pokemonImg.classList.add('pokemon-img-moving');
@@ -150,8 +153,8 @@ function assignPokemonToTrainer(trainerId) {
     }
 }
 
-function removePokemonFromTrainer(trainerId, pokemonIndex) {
-    const trainers = JSON.parse(localStorage.getItem('trainers')) || [];
+async function removePokemonFromTrainer(trainerId, pokemonIndex) {
+    const trainers = await getTrainers();
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     const trainer = trainers.find(tr => tr.id === trainerId);
     
@@ -160,8 +163,8 @@ function removePokemonFromTrainer(trainerId, pokemonIndex) {
         selectedPokemons.push(removedPokemon);
 
         localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
-        localStorage.setItem('trainers', JSON.stringify(trainers));
+        updateTrainer(trainer);
 
-        location.reload(); // Refresca la página después de eliminar un Pokémon
+        location.reload(); // Refresca la página después de eliminar el Pokémon
     }
 }
