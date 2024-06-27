@@ -132,6 +132,7 @@ async function assignPokemonToTrainer(trainerId) {
         const selection = prompt(`Selecciona un Pokémon para asignar a ${trainer.name}:\n${pokemonOptions}`);
 
         const selectedIndex = parseInt(selection) - 1;
+        
         if (!isNaN(selectedIndex) && selectedIndex >= 0 && selectedIndex < selectedPokemons.length) {
             const selectedPokemon = selectedPokemons.splice(selectedIndex, 1)[0];
             trainer.pokemons.push(selectedPokemon);

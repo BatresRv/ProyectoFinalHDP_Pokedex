@@ -1,4 +1,3 @@
-// db.js
 const DB_NAME = 'PokedexDB';
 const DB_VERSION = 1;
 const DB_STORE_NAME = 'trainers';
