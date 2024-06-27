@@ -205,36 +205,6 @@ label, input {
 }
 
 
-/*ESTYLO PARA BOTONES DE LA INTERFAS MIS ACOMPANATES*/
-.add-companion-btn, .remove-btn {
-    text-align: center;
-    margin: 5px;
-    padding: 10px 20px;
-    width: auto;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-    color: rgb(14, 2, 2);
-    font-weight: bold;
-    border: none;
-    cursor: pointer; /* MANO COMO CURSOR */
-    transition: box-shadow 0.3s ease, transform 0.3s ease, background-image 0.3s ease;
-}
-
-.add-companion-btn, .remove-btn:hover {
-    background-image: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%);
-    animation: slidebg 5s linear infinite;
-    color: rgb(3, 2, 2);
-  
-}
-
-@keyframes slidebg {
-    to {
-        background-position: 20vw;
-    }
-}
-
-
 .gif, .no-gif{
     display: none;
     width: 40px;
@@ -403,3 +373,27 @@ h1#typing {
 
 
 
+
+
+
+.remove-btn {
+    background-color: #3e3e3e;
+    color: #ffffff; 
+    font-weight: bold; /* Texto en negrita */
+
+    border: 2px solid #000000; /* Borde negro de 2px */
+    padding: 10px 20px;
+    font-family: "Arial", sans-serif; /* Tipografía similar a la usada en Pokémon */
+    font-size: 16px;
+    border-radius: 5px; /* Esquinas redondeadas */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Transición suave */
+}
+
+.remove-btn:hover {
+    font-weight: bold; /* Texto en negrita */
+
+    border: 2px solid #000000; 
+    background-color: #cc3333; /* Color de fondo rojo cuando se pasa el ratón */
+}

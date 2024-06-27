@@ -4,13 +4,6 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-<<<<<<< HEAD
-                                                
-=======
-    background: url('../Imgs/fondo.avif') no-repeat center center fixed;
-    background-size: cover;
-    overflow-x: hidden; 
->>>>>>> 12576ce1aa2075c0ef9fb03701356ab8010d7457
 }
 
 .container {
@@ -361,18 +354,4 @@ nav ul li a:hover {
     background-color: #45a049; /* Color de fondo al pasar el mouse */
 }
 
-body{
-    
-    background: linear-gradient(to right, #e0cc78,
-     #ebdcd2, #d69b98, #b9a5e7,
-      #98d8d8);
 
-}
-
-#gif-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-}
