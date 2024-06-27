@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'); 
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
     margin: 0;
     padding: 0;
 }
-  
+
 .container {
     display: flex;
     flex-direction: column;
@@ -181,7 +182,8 @@ nav ul li a:hover {
     justify-content: center;
     margin-top: 5px;
 }
-  
+
+
 /* Detalles de la tarjeta expandida */
 .details {
     margin-top: 10px;
@@ -352,11 +354,4 @@ nav ul li a:hover {
     background-color: #45a049; /* Color de fondo al pasar el mouse */
 }
 
-body{
-    
-    background: linear-gradient(to right, #e0cc78,
-     #ebdcd2, #d69b98, #b9a5e7,
-      #98d8d8);
-
-}
 

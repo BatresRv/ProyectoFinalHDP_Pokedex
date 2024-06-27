@@ -88,7 +88,7 @@ class Pokemon {
 
         selectButton.addEventListener('click', (event) => {
             event.stopPropagation();
-            this.selectPokemon();
+            this.selectPokemon(pokemonCard);
         });
 
         pokemonCard.appendChild(pokemonImage);
@@ -180,10 +180,11 @@ class Pokemon {
         card.querySelector('.select-btn').style.display = 'block'; // Mostrar el botón cuando se expande
     }
 
-    selectPokemon() {
+    selectPokemon(card) {
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         const messageElement = document.getElementById('messages');
-    
+        const gifContainer = document.getElementById('gif-container');
+
         function showAlert(message) {
             messageElement.innerHTML = message;
             messageElement.classList.add('show');
@@ -191,10 +192,10 @@ class Pokemon {
                 messageElement.classList.remove('show');
             }, 3000); // Ocultar después de 3 segundos
         }
-        
+
         // Limpiar mensajes previos
         messageElement.innerHTML = '';
-    
+
         if (selectedPokemons.length < 6 && !selectedPokemons.some(pokemon => pokemon.id === this.id)) {
             selectedPokemons.push({
                 id: this.id,
@@ -202,14 +203,45 @@ class Pokemon {
                 sprites: this.sprites,
                 types: this.types
             });
-            localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
+            localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));  
+
+            
+            gifContainer.style.display = 'block';
+            gifContainer.style.animation = 'none';
+            gifContainer.offsetHeight; 
+
+            setTimeout(() => {
+                gifContainer.style.display = 'none';     
+                showAlert('Pokémon seleccionado correctamente.');
+            }, 3000);
+      
+            setTimeout(() => {
+                
+                location.reload();
+            }, 6000);
             this.renderSelectedPokemons();
-            showAlert('Pokémon seleccionado correctamente.');
         } else if (selectedPokemons.some(pokemon => pokemon.id === this.id)) {
-            showAlert('Este Pokémon ya está seleccionado.');
+
+            
+            gifContainer.style.display = 'block';
+            gifContainer.style.animation = 'none';
+            gifContainer.offsetHeight; 
+            setTimeout(() => {
+                gifContainer.style.display = 'none'; 
+                
+                showAlert('Este Pokémon ya está seleccionado.');
+            }, 3000);
+
+            setTimeout(() => {
+                
+                location.reload();
+            }, 6000);
+            
+
         } else {
             showAlert('Ya has seleccionado 6 Pokémon.');
         }
+        
     }
 
     removePokemon(pokemonId) {
@@ -222,10 +254,9 @@ class Pokemon {
     renderSelectedPokemons() {
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         const selectedContainer = document.querySelector('.selected-pokemons');
- 
-        
+
         selectedContainer.innerHTML = '';
-    
+
         selectedPokemons.forEach(pokemon => {
             // Crea una nueva instancia de Pokemon para usar el método createPokemonCard
             const pokemonInstance = new Pokemon(pokemon.id, pokemon.name, pokemon.sprites, pokemon.types);
@@ -236,5 +267,3 @@ class Pokemon {
 }
 
 export default Pokemon;
-
-
