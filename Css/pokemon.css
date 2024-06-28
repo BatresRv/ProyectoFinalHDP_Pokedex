@@ -417,6 +417,7 @@ nav ul li a:hover {
 .tabs-container {
     display: flex;
     margin-bottom: 10px;
+    
 }
 
 .tab {
