@@ -142,11 +142,10 @@ hr {
     transition: all 0.05s ease;
     cursor: pointer;
     line-height: 1.5;
-<<<<<<< HEAD
+
     font-family: 'Times New Roman', serif; /* Reemplaza con el valor de tipografia-tex.$font-ancient-text */
-=======
+
     font-family: 'Times New Roman', serif; 
->>>>>>> d5f5666f5d64ba3eb42896d1edeacfd7c22f82db
     padding: 20px;
     border-radius: 50px; 
 }
@@ -167,18 +166,7 @@ hr {
     transition: 100ms;
 }
 
-<<<<<<< HEAD
 
-/* Contenedores principales */
-=======
-/* Estilos básicos */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
->>>>>>> d5f5666f5d64ba3eb42896d1edeacfd7c22f82db
 header, main {
     width: 80%;
     margin: 0 auto;
@@ -193,10 +181,9 @@ h1, h2 {
     margin-top: 50px;
 }
 
-<<<<<<< HEAD
 
 /* Estilos para el título con animación de escritura */
-=======
+
 form {
     display: flex;
     flex-direction: column;
@@ -208,7 +195,6 @@ label, input {
     margin-bottom: 10px;
 }
 
->>>>>>> d5f5666f5d64ba3eb42896d1edeacfd7c22f82db
 h1#typing {
     font-size: 2em;
     margin: 20px 0;

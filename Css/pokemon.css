@@ -414,29 +414,55 @@ nav ul li a:hover {
 .button:hover {
     background-color: #45a049;
 }
+
 .tabs-container {
     display: flex;
     margin-bottom: 10px;
-    
+    font-weight: bold;
+    font-family: "Comic Sans MS", "Arial", sans-serif; 
 }
 
 .tab {
     padding: 10px;
     cursor: pointer;
-    border: 1px solid #ddd;
+    border: 2px solid #ffcc00; 
     border-bottom: none;
-    background-color: #f1f1f1;
+    background-color: #f8e71c; 
+    color: #020418; 
     margin-right: 5px;
+    border-radius: 8px 8px 0 0; 
+    transition: background-color 0.3s ease;
+    border: 2px solid #000000; 
+    font-family: "Comic Sans MS", "Arial", sans-serif; 
+    font-weight: bold; 
+    font-size: 20px; 
+
+}
+
+.tab:hover {
+    background-color: #b42a08; 
+    color: #dbe919;
 }
 
 .tab-content {
+    font-weight: bold; 
     display: none;
-    border: 1px solid #ddd;
+    border: 2px solid #ffcc00;
     padding: 10px;
-    background-color: white;
+    background-color: rgb(145, 200, 236);
+    border-radius: 0 0 8px 8px;
+    font-family: "Comic Sans MS", "Arial", sans-serif; 
+
 }
 
 .tab-content.active {
     display: block;
 }
+@font-face {
+    font-family: "Pokemon";
+    src: url("ruta/a/la/fuente/pokemon.ttf") format("truetype");
+}
 
+body {
+    font-family: "Pokemon", "Arial", sans-serif;
+}
