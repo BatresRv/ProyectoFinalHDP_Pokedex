@@ -445,13 +445,14 @@ h1#typing {
 }
 
 .selected-pokemon-card h3 {
-    text-align: center;
+    text-align: block;
     font-size: 18px;
     color: #333;
     margin-bottom: 10px;
 }
 
 .entrenadores-text{
+    block-size: auto;
     font-size: 30px;
     font-family: 'Press Start 2P', cursive; 
     color: #FFCC00; 
