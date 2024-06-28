@@ -1,4 +1,4 @@
-import Pokedex from './pokedex.js'; // Importando la clase Pokedex 
+import Pokedex from './pokedex.js'; 
 
 document.addEventListener('DOMContentLoaded', () => {
 
