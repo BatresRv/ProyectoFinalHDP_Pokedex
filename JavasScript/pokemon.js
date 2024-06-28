@@ -54,10 +54,7 @@ class Pokemon {
         pokemonCard.style.backgroundColor = getTypeColor(pokemon.types[0].type.name);
 
         if (expandable) {
-            pokemonCard.addEventListener('click', (event) => {
-                event.stopPropagation();
-                this.expandCard(pokemonCard);
-            });
+            pokemonCard.addEventListener('click', () => this.expandCard(pokemonCard));
         }
 
         const pokemonImage = document.createElement('img');
@@ -123,154 +120,111 @@ class Pokemon {
             card.classList.remove('expanded');
             card.style.width = '';
             card.style.height = '';
-            const details = card.querySelector('.details');
-            if (details) {
-                details.remove();
-            }
+            card.querySelector('.details').remove();
             card.querySelector('.select-btn').style.display = 'none'; // Ocultar el botón cuando se contrae
             return;
         }
-
+    
         // Obtener la posición actual de la tarjeta seleccionada
         const cardRect = card.getBoundingClientRect();
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
+    
         card.classList.add('expanded');
         await this.fetchDetails();
-
+    
         const detailsContainer = document.createElement('div');
         detailsContainer.className = 'details';
-
-        // Crear las pestañas
-        const tabsContainer = document.createElement('div');
-        tabsContainer.className = 'tabs-container';
-
-        const aboutTab = document.createElement('button');
-        aboutTab.className = 'tab';
-        aboutTab.textContent = 'About';
-        aboutTab.addEventListener('click', (event) => {
-            event.stopPropagation();
-            this.showTab(detailsContainer, 'about-section');
-        });
-
-        const statsTab = document.createElement('button');
-        statsTab.className = 'tab';
-        statsTab.textContent = 'Base Stats';
-        statsTab.addEventListener('click', (event) => {
-            event.stopPropagation();
-            this.showTab(detailsContainer, 'stats-section');
-        });
-
-        const movesTab = document.createElement('button');
-        movesTab.className = 'tab';
-        movesTab.textContent = 'Moves';
-        movesTab.addEventListener('click', (event) => {
-            event.stopPropagation();
-            this.showTab(detailsContainer, 'moves-section');
-        });
-
-        tabsContainer.appendChild(aboutTab);
-        tabsContainer.appendChild(statsTab);
-        tabsContainer.appendChild(movesTab);
-
-        detailsContainer.appendChild(tabsContainer);
-
+    
         // Sección Acerca de
         const aboutSection = document.createElement('div');
-        aboutSection.className = 'about-section tab-content';
-
+        aboutSection.className = 'about-section';
+    
         const speciesItem = document.createElement('p');
         speciesItem.textContent = `Species: ${this.species} 🦸‍♂️`;
         aboutSection.appendChild(speciesItem);
-
+    
         const heightItem = document.createElement('p');
         heightItem.textContent = `Height: ${this.height / 10} m 📏`;
         aboutSection.appendChild(heightItem);
-
+    
         const weightItem = document.createElement('p');
         weightItem.textContent = `Weight: ${this.weight / 10} kg ⚖️`;
         aboutSection.appendChild(weightItem);
-
+    
         const abilitiesItem = document.createElement('p');
         abilitiesItem.textContent = `Abilities: ${this.abilities.map(ability => ability.ability.name).join(', ')} ✨`;
         aboutSection.appendChild(abilitiesItem);
-
+    
         const weaknessesItem = document.createElement('p');
         weaknessesItem.textContent = `Weaknesses: ${this.weaknesses.join(', ')} ⚔️`;
         aboutSection.appendChild(weaknessesItem);
-
+    
         detailsContainer.appendChild(aboutSection);
-
-        // Sección Stats
-        const statsSection = document.createElement('div');
-        statsSection.className = 'stats-section tab-content';
-
+    
+        // Sección Stats y Moves
+        const statsMovesSection = document.createElement('div');
+        statsMovesSection.className = 'stats-moves-section';
+    
         const statsTitle = document.createElement('h4');
         statsTitle.textContent = '📊 Stats:';
-        statsSection.appendChild(statsTitle);
-
+        statsMovesSection.appendChild(statsTitle);
+    
         const statsList = document.createElement('ul');
         this.stats.forEach(stat => {
             const statItem = document.createElement('li');
-
+    
             // Crear la barra de progreso
             const progressBarContainer = document.createElement('div');
             progressBarContainer.className = 'progress-bar-container';
-
+    
             const progressBar = document.createElement('div');
             progressBar.className = 'progress-bar';
             progressBar.style.width = `${stat.base_stat}%`;
-
+    
             // Cambiar el color según el valor
             if (stat.base_stat < 50) {
                 progressBar.classList.add('low');
             } else {
                 progressBar.classList.add('high');
             }
-
+    
             progressBarContainer.appendChild(progressBar);
-
+    
             // Añadir el nombre del stat y la barra
             statItem.textContent = `${stat.stat.name}: ${stat.base_stat}`;
             statItem.appendChild(progressBarContainer);
-
+    
             statsList.appendChild(statItem);
         });
-        statsSection.appendChild(statsList);
-
-        detailsContainer.appendChild(statsSection);
-
-        // Sección Moves
-        const movesSection = document.createElement('div');
-        movesSection.className = 'moves-section tab-content';
-
+        statsMovesSection.appendChild(statsList);
+    
         const movesTitle = document.createElement('h4');
         movesTitle.textContent = '📜 Moves:';
-        movesSection.appendChild(movesTitle);
-
+        statsMovesSection.appendChild(movesTitle);
+    
         const movesList = document.createElement('ul');
         this.moves.slice(0, 5).forEach(move => {
             const moveItem = document.createElement('li');
             moveItem.textContent = move.move.name;
             movesList.appendChild(moveItem);
         });
-        movesSection.appendChild(movesList);
-
-        detailsContainer.appendChild(movesSection);
-
+        statsMovesSection.appendChild(movesList);
+    
+        detailsContainer.appendChild(statsMovesSection);
+    
         card.appendChild(detailsContainer);
-
+    
         card.querySelector('.select-btn').style.display = 'block'; // Mostrar el botón cuando se expande
-
+    
         // Ajustar el scroll para que la tarjeta expandida esté visible
         const expandedCardRect = card.getBoundingClientRect();
         const scrollTarget = scrollTop + (expandedCardRect.top - cardRect.top);
-
+    
         window.scrollTo({
             top: scrollTarget,
             behavior: 'smooth' // O 'auto' para desplazamiento instantáneo
         });
-
+    
         // Forzar un reflow para activar la animación de la barra de progreso
         setTimeout(() => {
             const progressBars = card.querySelectorAll('.progress-bar');
@@ -278,35 +232,85 @@ class Pokemon {
                 bar.style.width = bar.style.width; // Reaplicar el ancho para activar la animación
             });
         }, 0);
-
-        // Mostrar la primera pestaña por defecto
-        this.showTab(detailsContainer, 'about-section');
     }
 
-    showTab(container, tabClass) {
-        const tabs = container.querySelectorAll('.tab-content');
-        tabs.forEach(tab => {
-            tab.style.display = 'none';
-        });
-        const activeTab = container.querySelector(`.${tabClass}`);
-        if (activeTab) {
-            activeTab.style.display = 'block';
+    selectPokemon(card) {
+        const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
+        const messageElement = document.getElementById('messages');
+        const gifContainer = document.getElementById('gif-container');
+
+        function showAlert(message) {
+            messageElement.innerHTML = message;
+            messageElement.classList.add('show');
+            setTimeout(() => {
+                messageElement.classList.remove('show');
+            }, 3000); // Ocultar después de 3 segundos
         }
-    }
 
+        // Limpiar mensajes previos
+        messageElement.innerHTML = '';
+
+        if (selectedPokemons.length < 6 && !selectedPokemons.some(pokemon => pokemon.id === this.id)) {
+            selectedPokemons.push({
+                id: this.id,
+                name: this.name,
+                sprites: this.sprites,
+                types: this.types
+            });
+            localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));  
+
+            
+            gifContainer.style.display = 'block';
+            gifContainer.style.animation = 'none';
+            gifContainer.offsetHeight; 
+
+            setTimeout(() => {
+                gifContainer.style.display = 'none';     
+                showAlert('Pokémon seleccionado correctamente.');
+            }, 3000);
+      
+            setTimeout(() => {
+                
+                location.reload();
+            }, 6000);
+            this.renderSelectedPokemons();
+        } else if (selectedPokemons.some(pokemon => pokemon.id === this.id)) {
+
+            
+            gifContainer.style.display = 'block';
+            gifContainer.style.animation = 'none';
+            gifContainer.offsetHeight; 
+            setTimeout(() => {
+                gifContainer.style.display = 'none'; 
+                
+                showAlert('Este Pokémon ya está seleccionado.');
+            }, 3000);
+
+            setTimeout(() => {
+                
+                location.reload();
+            }, 6000);
+            
+
+        } else {
+            showAlert('Ya has seleccionado 6 Pokémon.');
+        }
+        
+    }
+    
     removePokemon(pokemonId) {
         let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         selectedPokemons = selectedPokemons.filter(pokemon => pokemon.id !== pokemonId);
         localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
         this.renderSelectedPokemons();
     }
-
+    
     renderSelectedPokemons() {
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         const selectedContainer = document.querySelector('.selected-pokemons');
-
+    
         selectedContainer.innerHTML = '';
-
+    
         selectedPokemons.forEach(pokemon => {
             // Crea una nueva instancia de Pokemon para usar el método createPokemonCard
             const pokemonInstance = new Pokemon(pokemon.id, pokemon.name, pokemon.sprites, pokemon.types);
@@ -315,5 +319,4 @@ class Pokemon {
         });
     }
 }
-
-export default Pokemon;
+export default Pokemon;  

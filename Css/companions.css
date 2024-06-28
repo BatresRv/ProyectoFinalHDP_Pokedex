@@ -38,7 +38,7 @@ footer {
 }
 
 .footer-section ul li {
-    margin-bottom: 0.5rem;
+    margin: 5px;
 }
 
 .footer-section a {
@@ -111,11 +111,11 @@ hr {
     text-align: center;
     margin: 10px;
     padding: 10px;
-    width: 80px;
+    width: 200px;
     height: auto;
     border-radius: 10px;
     box-shadow: 10px 10px 10px rgba(40, 58, 47, 0.5);
-    background-color: rgb(31, 24, 29);
+    background-color: rgb(46, 42, 45);
     cursor: pointer; /* MANO COMO CURSOR*/
     
 }
@@ -208,51 +208,9 @@ label, input {
 
 
 
-/* seccion cartas de entrenadores ptetetetetettte paca paca
-paca paca paca*/
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-}
 
-header {
-   text-align: center;
-    margin-top: 60px;
-}
 
-nav {
-    background-color: #FFCC01;
-    padding: 10px;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
-
-nav ul li a:hover {
-    color: #3B4CCA;
-}
-
-main {
-    padding: 20px;
-}
 
 h1#typing {
     font-size: 2em;
