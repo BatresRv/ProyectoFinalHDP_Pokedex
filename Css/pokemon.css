@@ -414,3 +414,28 @@ nav ul li a:hover {
 .button:hover {
     background-color: #45a049;
 }
+.tabs-container {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.tab {
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    background-color: #f1f1f1;
+    margin-right: 5px;
+}
+
+.tab-content {
+    display: none;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: white;
+}
+
+.tab-content.active {
+    display: block;
+}
+
