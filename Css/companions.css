@@ -1,4 +1,6 @@
+/* Importación de la fuente Pokemon Solid */
 @import url('https://fonts.cdnfonts.com/css/pokemon-solid');
+/* Animación para mover la imagen del Pokémon al entrenador */
 
 @keyframes moveToTrainer {
     0% {
@@ -8,11 +10,11 @@
         transform: translateX(calc(100vw - 50px)); /* Ajusta el valor para que coincida con la posición final */
     }
 }
-
+/* Clase para activar la animación de movimiento del Pokémon */
 .pokemon-img-moving {
     animation: moveToTrainer 5s forwards;
 }
-
+/* Estilos del pie de página */
 footer {
     margin-top: 20vh;
     display: flex;
@@ -22,7 +24,7 @@ footer {
     background-color: #333;
     color: #fff;
 }
-
+/* Estilos para las secciones dentro del pie de página */
 .footer-section {
     flex: 1;
     margin: 1rem;
@@ -49,11 +51,11 @@ footer {
 .footer-section a:hover {
     text-decoration: underline;
 }
-
+/* Imagen en movimiento dentro del pie de página */
 .footer-section img.moving-image {
     max-width: 100px;
 }
-
+/* Línea horizontal */
 hr {
     border: none;
     border-top: 1px solid #ccc;
@@ -88,15 +90,13 @@ hr {
     .footer-section img.moving-image {
         display: none;
     }
+    /* Efecto hover para la imagen de movimiento */
     .footer-section img.moving-image:hover{
         box-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00; 
     transition: all 0.5s ease-in-out;
-
-
     }
-
 }
-
+/* Efecto hover para los títulos h4 */
 .clas-text-h4:hover{
     color: #FFCC00; 
     border-radius: 10px;
@@ -106,7 +106,7 @@ hr {
     width: 200px;
     text-align: center;
 }
-
+/* Estilos para la lista en el pie de página */
 .ul-foot{
     text-align: center;
     margin: 10px;
@@ -119,7 +119,7 @@ hr {
     cursor: pointer; /* MANO COMO CURSOR*/
     
 }
-
+/* Efecto hover para la lista en el pie de página */
 .ul-foot:hover{
     text-align: center;
     color: #FFCC00; 
@@ -127,21 +127,12 @@ hr {
     box-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00; 
 }
     
-
-hr{
-    width: 100%;
-    height: 1px;
-    border: 10;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin: 20px 0;
-}
-
-
+/* Contenedor para los Pokémon seleccionados */
 .selected-pokemons {
     display: grid; 
     grid-template-columns: repeat(2, 1fr); 
 }
-
+/* Contenedor de la Pokédex */
 .pokedex-container {
     padding: 17px 40px; 
     background-color: #FF4500; /* Reemplaza con el valor de colores.$color-nami */
@@ -152,18 +143,17 @@ hr{
     cursor: pointer;
     line-height: 1.5;
     font-family: 'Times New Roman', serif; /* Reemplaza con el valor de tipografia-tex.$font-ancient-text */
-
     padding: 20px;
     border-radius: 50px; /* Asumiendo que .borde_redondeado_50px es border-radius: 50px; */
 }
-
+/* Efecto hover para el contenedor de la Pokédex */
 .pokedex-container:hover {
     line-height: 3px;
     background-color: #FF4500; /* Reemplaza con el valor de colores.$color-nami */
     color: #FFA500; /* Reemplaza con el valor de colores.$color-secundario */
     box-shadow: 0 7px 29px 0 #000000; /* Reemplaza con el valor de colores.$color-negro */
 }
-
+/* Efecto activo para el contenedor de la Pokédex */
 .pokedex-container:active {
     line-height: 3px;
     background-color: #FF4500; /* Reemplaza con el valor de colores.$color-nami */
@@ -174,13 +164,7 @@ hr{
 }
 
 
-/* Estilos básicos */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
+/* Contenedores principales */
 header, main {
     width: 80%;
     margin: 0 auto;
@@ -190,40 +174,25 @@ header, main {
 h1, h2 {
     margin-bottom: 20px;
 }
-
+/* Estilos para el botón de añadir acompañante */
 #add-companion {
     margin-top: 50px;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    max-width: 300px;
-    margin: 0 auto;
-}
 
-label, input {
-    margin-bottom: 10px;
-}
-
-
-
-
-
-
-
+/* Estilos para el título con animación de escritura */
 h1#typing {
     font-size: 2em;
     margin: 20px 0;
 }
-
+/* Contenedor para el contenido principal */
 .content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     color: #333;
 }
-
+/* Contenedor para los entrenadores */
 .trainers-container {
     background-color: white;
     color: #333;
@@ -234,7 +203,7 @@ h1#typing {
     flex: 1;
     min-width: 45%;
 }
-
+/* Orden de los contenedores en dispositivos pequeños */
 .selected-pokemons {
     order: 1;
 }
@@ -242,7 +211,7 @@ h1#typing {
 .trainers-container {
     order: 2;
 }
-
+/* Estilos para las tarjetas de Pokémon seleccionados y entrenadores */
 .selected-pokemon-card, .trainer-card {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -253,18 +222,18 @@ h1#typing {
     display: flex;
     align-items: center;
 }
-
+/* Estilos para las imágenes de Pokémon */
 .selected-pokemon-card img, .trainer-pokemon-image {
     width: 50px;
     height: 50px;
     margin-right: 10px;
 }
-
+/* Estilos para los títulos de las tarjetas de Pokémon seleccionados */
 .selected-pokemon-card h3 {
     flex-grow: 1;
     margin: 0 10px;
 }
-
+/* Estilos para el botón de eliminar Pokémon */
 .selected-pokemon-card button {
     background-color: #ff4d4d;
     color: white;
@@ -273,11 +242,10 @@ h1#typing {
     border-radius: 5px;
     cursor: pointer;
 }
-
+/* Estilos para el botón de eliminar con diseño inspirado en Pokémon */
 .selected-pokemon-card button:hover {
     background-color: #cc0000;
 }
-
 .remove-btn {
     
     background-color: #3e3e3e;

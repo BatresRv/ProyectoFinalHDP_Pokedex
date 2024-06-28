@@ -1,11 +1,13 @@
+// Importa funciones y clases desde otros archivos
 import { addTrainer, getTrainers, updateTrainer, deleteTrainer } from './db.js';
 import Pokemon from './pokemon.js';
-
+// Espera a que el DOM esté completamente cargado antes de ejecutar las funciones
 document.addEventListener('DOMContentLoaded', () => {
     initializeTrainers();
     renderSelectedPokemons();
     renderTrainers();
 });
+// Inicializa los entrenadores si no existen en la base de datos
 
 async function initializeTrainers() {
     const initialTrainers = [
@@ -15,11 +17,12 @@ async function initializeTrainers() {
         { id: 4, name: 'Alisson', group: 'Sabiduría', pokemons: [] },
         { id: 5, name: 'Yosselin', group: 'Instinto', pokemons: [] },
     ];
-
+    // Obtiene la lista de entrenadores desde la base de datos
     let trainers = await getTrainers();
     if (trainers.length === 0) {
         initialTrainers.forEach(trainer => addTrainer(trainer));
     } else {
+        // Actualiza los entrenadores existentes con el grupo si falta
         trainers = trainers.map(trainer => {
             if (!trainer.group) {
                 const initialTrainer = initialTrainers.find(it => it.id === trainer.id);
@@ -32,7 +35,7 @@ async function initializeTrainers() {
         });
     }
 }
-
+// Renderiza los Pokémon seleccionados desde el localStorage
 async function renderSelectedPokemons() {
     // Asumiremos que selectedPokemons se manejan aún en localStorage
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
@@ -46,7 +49,7 @@ async function renderSelectedPokemons() {
         selectedContainer.appendChild(pokemonCard);
     });
 }
-
+// Crea una tarjeta HTML para un Pokémon seleccionado
 function createSelectedPokemonCard(pokemon) {
     const card = document.createElement('div');
     card.className = 'selected-pokemon-card';
@@ -71,14 +74,14 @@ function createSelectedPokemonCard(pokemon) {
 
     return card;
 }
-
+// Elimina un Pokémon seleccionado del localStorage y actualiza la vista
 function removePokemon(pokemonId) {
     let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     selectedPokemons = selectedPokemons.filter(pokemon => pokemon.id !== pokemonId);
     localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
     renderSelectedPokemons();
 }
-
+// Renderiza la lista de entrenadores desde la base de datos
 async function renderTrainers() {
     const trainers = await getTrainers();
     const trainersContainer = document.querySelector('.trainers-container');
@@ -89,7 +92,7 @@ async function renderTrainers() {
         trainersContainer.appendChild(trainerCard);
     });
 }
-
+// Crea una tarjeta HTML para un entrenado
 function createTrainerCard(trainer) {
     const trainerCard = document.createElement('div');
     const teamName = trainer.group.toLowerCase();
@@ -137,7 +140,7 @@ function createTrainerCard(trainer) {
 
     return trainerCard;
 }
-
+// Asigna un Pokémon seleccionado a un entrenador
 async function assignPokemonToTrainer(trainerId) {
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     const trainers = await getTrainers();
@@ -168,7 +171,7 @@ async function assignPokemonToTrainer(trainerId) {
         alert('No hay Pokémon seleccionados para asignar.');
     }
 }
-
+// Elimina un Pokémon de un entrenador y lo devuelve a la lista de seleccionados
 async function removePokemonFromTrainer(trainerId, pokemonIndex) {
     const trainers = await getTrainers();
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
