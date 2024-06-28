@@ -321,6 +321,7 @@ h1#typing {
 }
 
 .remove-btn {
+    
     background-color: #3e3e3e;
     color: #ffffff; 
     font-weight: bold; /* Texto en negrita */
@@ -387,9 +388,16 @@ h1#typing {
 }
 
 .trainer-card h3 {
-    margin: 0 0 10px;
-    font-size: 18px;
-    color: #333;
+    
+    font-size: 15px;
+    font-family: 'Press Start 2P', cursive; 
+    color: #FFCC00; 
+    text-shadow: 2px 2px 0 #3333CC, 4px 4px 0 #FF0000; 
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 0.15em solid #FFCC00;;
+    
+
 }
 
 .trainer-card span {
@@ -401,18 +409,26 @@ h1#typing {
 }
 
 .trainer-card button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
+    background-color: rgb(255,255,0);
+    color: #720b0b; 
+    font-weight: bold; /* Texto en negrita */
+
+    border: 2px solid #000000; /* Borde negro de 2px */
+    padding: 5px 5px;
+    font-family: "Arial", sans-serif; /* Tipografía similar a la usada en Pokémon */
+    font-size: 16px;
+    border-radius: 5px; /* Esquinas redondeadas */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra suave */
     cursor: pointer;
-    margin-top: 8px;
-    border-radius: 4px;
-    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Transición suave */
+
 }
 
 .trainer-card button:hover {
-    background-color: #0056b3;
+    font-weight: bold; /* Texto en negrita */
+    color: rgb(255,255,0);
+    border: 2px solid #000000; 
+    background-color: #0b3aa0; /* Color de fondo rojo cuando se pasa el ratón */
 }
 
 .trainer-card ul {
@@ -475,4 +491,27 @@ h1#typing {
     font-size: 18px;
     color: #333;
     margin-bottom: 10px;
+}
+
+.entrenadores-text{
+    font-size: 30px;
+    font-family: 'Press Start 2P', cursive; 
+    color: #FFCC00; 
+    text-shadow: 2px 2px 0 #3333CC, 4px 4px 0 #FF0000; 
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 0.15em solid #FFCC00;;
+    animation: typing 5s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
+
+}
+
+.comp {
+    font-size: 20px;
+    font-family: 'Press Start 2P', cursive; 
+    color: #FFCC00; 
+    text-shadow: 2px 2px 0 #3333CC, 4px 4px 0 #FF0000; 
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 0.15em solid #FFCC00;;
+    animation: typing 5s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
 }
