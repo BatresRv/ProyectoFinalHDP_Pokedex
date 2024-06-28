@@ -1,4 +1,4 @@
-import Pokemon from './pokemon.js'; // Importando la clase Pokemon 
+import Pokemon from './pokemon.js'; 
 
 class Pokedex {
     constructor() {

@@ -339,6 +339,7 @@ h1#typing {
     transition: transform 0.2s;
     display: flex;
     flex-direction: column;
+    width: 220px;
 }
 
 .trainer-card.sabiduría {
@@ -375,7 +376,6 @@ h1#typing {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    margin-bottom: 10px;
     background-color: transparent; 
 }
 
@@ -390,7 +390,6 @@ h1#typing {
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-text-stroke: 1px black; 
-
     -webkit-text-fill-color: white;
     
 }
@@ -408,6 +407,7 @@ h1#typing {
     background-color: rgb(255,255,0);
     color: #720b0b; 
     font-weight: bold;
+    margin-top: 9px;
     border: 2px solid #000000;
     padding: 5px 5px;
     font-family: "Arial", sans-serif;
@@ -473,7 +473,7 @@ h1#typing {
     margin-bottom: 16px;
     background-color: #f9f9f9;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    width: 200px;
+    width: auto;
 }
 
 .selected-pokemon-card img {
@@ -536,3 +536,4 @@ h1#typing {
 .tab-content.active {
     display: block;
 }
+

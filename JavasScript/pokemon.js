@@ -3,18 +3,19 @@ import { getTypeColor } from './utils.js';
 class Pokemon {
     constructor(id, name, sprites, types) {
         this.id = id;
-        this.name = name;
+        this.name = name; 
         this.sprites = sprites;
-        this.types = types;
-        this.species = null;
+        this.types = types; 
+        this.species = null; 
         this.height = null;
-        this.weight = null;
-        this.abilities = null;
-        this.weaknesses = null;
-        this.stats = null;
-        this.moves = null;
+        this.weight = null; 
+        this.abilities = null; 
+        this.weaknesses = null; 
+        this.stats = null; 
+        this.moves = null; 
     }
 
+    // Métodopara obtener los detalles del Pokémon 
     async fetchDetails() {
         if (this.stats && this.moves) return;
 
@@ -22,6 +23,7 @@ class Pokemon {
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
             const data = await response.json();
 
+            // Asignado los detalles 
             this.species = await this.fetchSpecies(data.species.url);
             this.height = data.height;
             this.weight = data.weight;
@@ -29,54 +31,54 @@ class Pokemon {
             this.stats = data.stats;
             this.moves = data.moves;
 
+            // Obteniendi las debilidades del Pokémon
             const weaknessesResponse = await Promise.all(this.types.map(type => fetch(type.type.url).then(res => res.json())));
             const weaknesses = weaknessesResponse.map(response => response.damage_relations.double_damage_from.map(type => type.name));
             this.weaknesses = [].concat(...weaknesses);
         } catch (error) {
-            console.error('Error fetching details:', error);
+            console.error('Error:', error);
         }
     }
 
+    // Método para obtener la species del Pokémon 
     async fetchSpecies(url) {
         try {
             const response = await fetch(url);
             const data = await response.json();
             return data.name;
         } catch (error) {
-            console.error('Error fetching species:', error);
-            return 'Unknown';
+            console.error('Error:', error);
+            return 'Error'; 
         }
     }
 
-    createPokemonCard(pokemon, expandable = true, showRemoveButton = false) {
+    // Método para crear la tarjeta de un Pokémon
+    createPokemonCard(expandable = true, showRemoveButton = false) {
         const pokemonCard = document.createElement('div');
-        pokemonCard.className = `pokemon-card ${pokemon.types[0].type.name}`;
-        pokemonCard.style.backgroundColor = getTypeColor(pokemon.types[0].type.name);
+        pokemonCard.className = `pokemon-card ${this.types[0].type.name}`;
+        pokemonCard.style.backgroundColor = getTypeColor(this.types[0].type.name);
 
         if (expandable) {
-            pokemonCard.addEventListener('click', (event) => {
-                event.stopPropagation();
-                this.expandCard(pokemonCard);
-            });
+            pokemonCard.addEventListener('click', () => this.expandCard(pokemonCard));
         }
 
         const pokemonImage = document.createElement('img');
-        pokemonImage.src = pokemon.sprites.front_default;
-        pokemonImage.alt = pokemon.name;
+        pokemonImage.src = this.sprites.front_default;
+        pokemonImage.alt = this.name;
 
         const pokemonName = document.createElement('h3');
-        pokemonName.textContent = pokemon.name;
+        pokemonName.textContent = this.name;
 
         const idContainer = document.createElement('div');
         idContainer.className = 'id-container';
         const pokemonId = document.createElement('span');
-        pokemonId.textContent = pokemon.id;
+        pokemonId.textContent = this.id;
         idContainer.appendChild(pokemonId);
 
         const typesContainer = document.createElement('div');
         typesContainer.className = 'types-container';
 
-        pokemon.types.forEach(type => {
+        this.types.forEach(type => {
             const typeCircle = document.createElement('div');
             typeCircle.className = 'type-circle';
             typeCircle.textContent = type.type.name;
@@ -86,7 +88,7 @@ class Pokemon {
 
         const selectButton = document.createElement('button');
         selectButton.className = 'select-btn';
-        selectButton.textContent = 'Seleccionar';
+        selectButton.textContent = 'Atrapar';
         selectButton.style.display = 'none'; // Inicialmente oculto
 
         selectButton.addEventListener('click', (event) => {
@@ -103,7 +105,7 @@ class Pokemon {
         if (showRemoveButton) {
             const removeButton = document.createElement('button');
             removeButton.className = 'remove-btn';
-            removeButton.textContent = 'L';
+
             removeButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 this.removePokemon(this.id);
@@ -113,19 +115,18 @@ class Pokemon {
         return pokemonCard;
     }
 
-    render() {
-        return this.createPokemonCard(this);
+    // Método para renderizar la tarjeta del Pokémon
+    render(expandable = true, showRemoveButton = false) {
+        return this.createPokemonCard(expandable, showRemoveButton);
     }
 
+    // Método para expandir la tarjeta del Pokémon y mostrar detalles adicionales
     async expandCard(card) {
         if (card.classList.contains('expanded')) {
             card.classList.remove('expanded');
             card.style.width = '';
             card.style.height = '';
-            const details = card.querySelector('.details');
-            if (details) {
-                details.remove();
-            }
+            card.querySelector('.details').remove();
             card.querySelector('.select-btn').style.display = 'none'; // Ocultar el botón cuando se contrae
             return;
         }
@@ -293,6 +294,7 @@ class Pokemon {
         }
     }
 
+
     selectPokemon(card) {
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         const messageElement = document.getElementById('messages');
@@ -318,48 +320,35 @@ class Pokemon {
             });
             localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));  
 
-            
-            gifContainer.style.display = 'block';
-            gifContainer.style.animation = 'none';
+
             gifContainer.offsetHeight; 
 
             setTimeout(() => {
                 gifContainer.style.display = 'none';     
-                showAlert('Pokémon seleccionado correctamente.');
+                showAlert('Pokémon atrapado correctamente.');
             }, 3000);
-      
-            setTimeout(() => {
-                
-                location.reload();
-            }, 6000);
-            this.renderSelectedPokemons();
+
         } else if (selectedPokemons.some(pokemon => pokemon.id === this.id)) {
 
             
             gifContainer.style.display = 'block';
-            gifContainer.style.animation = 'none';
-            gifContainer.offsetHeight; 
-            setTimeout(() => {
-                gifContainer.style.display = 'none'; 
-                
-                showAlert('Este Pokémon ya está seleccionado.');
-            }, 3000);
 
-            setTimeout(() => {
-                
-                location.reload();
-            }, 6000);
-            
-
-        } else {
-            showAlert('Ya has seleccionado 6 Pokémon.');
         }
+        
     }
-
+    
+    // Método para eliminar un Pokémon seleccionado
     removePokemon(pokemonId) {
+        // Obtenemos la lista de Pokémon 
         let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
+
+        // Filtramos el array para eliminar el Pokémon por id 
         selectedPokemons = selectedPokemons.filter(pokemon => pokemon.id !== pokemonId);
+
+        // Guardamos el array actualizado de nuevo 
         localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
+
+        // Volvemos a renderizar los Pokémon 
         this.renderSelectedPokemons();
     }
     removePokemon(pokemonId) {
@@ -369,20 +358,28 @@ class Pokemon {
         this.renderSelectedPokemons();
     }
 
+    
+    // Método para renderizar los Pokémon desde el localStorage
     renderSelectedPokemons() {
+        // Obtenemos la lista de Pokémon seleccionados 
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
+
         const selectedContainer = document.querySelector('.selected-pokemons');
 
         selectedContainer.innerHTML = '';
 
+        // Iteramos sobre cada Pokémon 
         selectedPokemons.forEach(pokemon => {
-            // Crea una nueva instancia de Pokemon para usar el método createPokemonCard
+
+            // Creando una instancia de la clase Pokemon con los datos del Pokémon actual
             const pokemonInstance = new Pokemon(pokemon.id, pokemon.name, pokemon.sprites, pokemon.types);
-            const pokemonCard = pokemonInstance.createPokemonCard(pokemon, false, true); // No expandible, mostrar botón de eliminación
+            // Usamos false para que la tarjeta no sea expanda y true para mostrar el boton
+            const pokemonCard = pokemonInstance.render(false, true);
+
             selectedContainer.appendChild(pokemonCard);
         });
     }
-    
+
 }
 
 
