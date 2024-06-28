@@ -118,145 +118,135 @@ class Pokemon {
     async expandCard(card) {
         if (card.classList.contains('expanded')) {
             card.classList.remove('expanded');
-            card.style.width = '150px';
-            card.style.height = 'auto';
+            card.style.width = '';
+            card.style.height = '';
             card.querySelector('.details').remove();
             card.querySelector('.select-btn').style.display = 'none'; // Ocultar el botón cuando se contrae
             return;
         }
-
+    
+        // Obtener la posición actual de la tarjeta seleccionada
+        const cardRect = card.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
         card.classList.add('expanded');
         await this.fetchDetails();
-
+    
         const detailsContainer = document.createElement('div');
         detailsContainer.className = 'details';
-
+    
+        // Sección Acerca de
+        const aboutSection = document.createElement('div');
+        aboutSection.className = 'about-section';
+    
         const speciesItem = document.createElement('p');
-        speciesItem.textContent = `Species: ${this.species}`;
-        detailsContainer.appendChild(speciesItem);
-
+        speciesItem.textContent = `Species: ${this.species} 🦸‍♂️`;
+        aboutSection.appendChild(speciesItem);
+    
         const heightItem = document.createElement('p');
-        heightItem.textContent = `Height: ${this.height / 10} m`;
-        detailsContainer.appendChild(heightItem);
-
+        heightItem.textContent = `Height: ${this.height / 10} m 📏`;
+        aboutSection.appendChild(heightItem);
+    
         const weightItem = document.createElement('p');
-        weightItem.textContent = `Weight: ${this.weight / 10} kg`;
-        detailsContainer.appendChild(weightItem);
-
+        weightItem.textContent = `Weight: ${this.weight / 10} kg ⚖️`;
+        aboutSection.appendChild(weightItem);
+    
         const abilitiesItem = document.createElement('p');
-        abilitiesItem.textContent = `Abilities: ${this.abilities.map(ability => ability.ability.name).join(', ')}`;
-        detailsContainer.appendChild(abilitiesItem);
-
+        abilitiesItem.textContent = `Abilities: ${this.abilities.map(ability => ability.ability.name).join(', ')} ✨`;
+        aboutSection.appendChild(abilitiesItem);
+    
         const weaknessesItem = document.createElement('p');
-        weaknessesItem.textContent = `Weaknesses: ${this.weaknesses.join(', ')}`;
-        detailsContainer.appendChild(weaknessesItem);
-
+        weaknessesItem.textContent = `Weaknesses: ${this.weaknesses.join(', ')} ⚔️`;
+        aboutSection.appendChild(weaknessesItem);
+    
+        detailsContainer.appendChild(aboutSection);
+    
+        // Sección Stats y Moves
+        const statsMovesSection = document.createElement('div');
+        statsMovesSection.className = 'stats-moves-section';
+    
         const statsTitle = document.createElement('h4');
-        statsTitle.textContent = 'Stats:';
-        detailsContainer.appendChild(statsTitle);
-
+        statsTitle.textContent = '📊 Stats:';
+        statsMovesSection.appendChild(statsTitle);
+    
         const statsList = document.createElement('ul');
         this.stats.forEach(stat => {
             const statItem = document.createElement('li');
+    
+            // Crear la barra de progreso
+            const progressBarContainer = document.createElement('div');
+            progressBarContainer.className = 'progress-bar-container';
+    
+            const progressBar = document.createElement('div');
+            progressBar.className = 'progress-bar';
+            progressBar.style.width = `${stat.base_stat}%`;
+    
+            // Cambiar el color según el valor
+            if (stat.base_stat < 50) {
+                progressBar.classList.add('low');
+            } else {
+                progressBar.classList.add('high');
+            }
+    
+            progressBarContainer.appendChild(progressBar);
+    
+            // Añadir el nombre del stat y la barra
             statItem.textContent = `${stat.stat.name}: ${stat.base_stat}`;
+            statItem.appendChild(progressBarContainer);
+    
             statsList.appendChild(statItem);
         });
-        detailsContainer.appendChild(statsList);
-
+        statsMovesSection.appendChild(statsList);
+    
         const movesTitle = document.createElement('h4');
-        movesTitle.textContent = 'Moves:';
-        detailsContainer.appendChild(movesTitle);
-
+        movesTitle.textContent = '📜 Moves:';
+        statsMovesSection.appendChild(movesTitle);
+    
         const movesList = document.createElement('ul');
         this.moves.slice(0, 5).forEach(move => {
             const moveItem = document.createElement('li');
             moveItem.textContent = move.move.name;
             movesList.appendChild(moveItem);
         });
-        detailsContainer.appendChild(movesList);
-
+        statsMovesSection.appendChild(movesList);
+    
+        detailsContainer.appendChild(statsMovesSection);
+    
         card.appendChild(detailsContainer);
-
+    
         card.querySelector('.select-btn').style.display = 'block'; // Mostrar el botón cuando se expande
-    }
-
-    selectPokemon(card) {
-        const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
-        const messageElement = document.getElementById('messages');
-        const gifContainer = document.getElementById('gif-container');
-
-        function showAlert(message) {
-            messageElement.innerHTML = message;
-            messageElement.classList.add('show');
-            setTimeout(() => {
-                messageElement.classList.remove('show');
-            }, 3000); // Ocultar después de 3 segundos
-        }
-
-        // Limpiar mensajes previos
-        messageElement.innerHTML = '';
-
-        if (selectedPokemons.length < 6 && !selectedPokemons.some(pokemon => pokemon.id === this.id)) {
-            selectedPokemons.push({
-                id: this.id,
-                name: this.name,
-                sprites: this.sprites,
-                types: this.types
+    
+        // Ajustar el scroll para que la tarjeta expandida esté visible
+        const expandedCardRect = card.getBoundingClientRect();
+        const scrollTarget = scrollTop + (expandedCardRect.top - cardRect.top);
+    
+        window.scrollTo({
+            top: scrollTarget,
+            behavior: 'smooth' // O 'auto' para desplazamiento instantáneo
+        });
+    
+        // Forzar un reflow para activar la animación de la barra de progreso
+        setTimeout(() => {
+            const progressBars = card.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+                bar.style.width = bar.style.width; // Reaplicar el ancho para activar la animación
             });
-            localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));  
-
-            
-            gifContainer.style.display = 'block';
-            gifContainer.style.animation = 'none';
-            gifContainer.offsetHeight; 
-
-            setTimeout(() => {
-                gifContainer.style.display = 'none';     
-                showAlert('Pokémon seleccionado correctamente.');
-            }, 3000);
-      
-            setTimeout(() => {
-                
-                location.reload();
-            }, 6000);
-            this.renderSelectedPokemons();
-        } else if (selectedPokemons.some(pokemon => pokemon.id === this.id)) {
-
-            
-            gifContainer.style.display = 'block';
-            gifContainer.style.animation = 'none';
-            gifContainer.offsetHeight; 
-            setTimeout(() => {
-                gifContainer.style.display = 'none'; 
-                
-                showAlert('Este Pokémon ya está seleccionado.');
-            }, 3000);
-
-            setTimeout(() => {
-                
-                location.reload();
-            }, 6000);
-            
-
-        } else {
-            showAlert('Ya has seleccionado 6 Pokémon.');
-        }
-        
+        }, 0);
     }
-
+    
     removePokemon(pokemonId) {
         let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         selectedPokemons = selectedPokemons.filter(pokemon => pokemon.id !== pokemonId);
         localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
         this.renderSelectedPokemons();
     }
-
+    
     renderSelectedPokemons() {
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         const selectedContainer = document.querySelector('.selected-pokemons');
-
+    
         selectedContainer.innerHTML = '';
-
+    
         selectedPokemons.forEach(pokemon => {
             const pokemonInstance = new Pokemon(pokemon.id, pokemon.name, pokemon.sprites, pokemon.types);
             const pokemonCard = pokemonInstance.render(false, true); // No expandible, mostrar botón de eliminación
@@ -264,5 +254,4 @@ class Pokemon {
         });
     }
 }
-
-export default Pokemon;
+export default Pokemon;  
