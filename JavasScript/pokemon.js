@@ -91,7 +91,7 @@ class Pokemon {
 
         selectButton.addEventListener('click', (event) => {
             event.stopPropagation();
-            this.selectPokemon(pokemon);
+            this.selectPokemon(pokemonCard);
         });
 
         pokemonCard.appendChild(pokemonImage);
@@ -103,14 +103,13 @@ class Pokemon {
         if (showRemoveButton) {
             const removeButton = document.createElement('button');
             removeButton.className = 'remove-btn';
-            removeButton.textContent = 'Eliminar';
+            removeButton.textContent = 'L';
             removeButton.addEventListener('click', (event) => {
                 event.stopPropagation();
-                this.removePokemon(pokemon.id);
+                this.removePokemon(this.id);
             });
             pokemonCard.appendChild(removeButton);
         }
-
         return pokemonCard;
     }
 
@@ -294,7 +293,7 @@ class Pokemon {
         }
     }
 
-    selectPokemon(pokemon) {
+    selectPokemon(card) {
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         const messageElement = document.getElementById('messages');
         const gifContainer = document.getElementById('gif-container');
@@ -310,52 +309,59 @@ class Pokemon {
         // Limpiar mensajes previos
         messageElement.innerHTML = '';
 
-        if (selectedPokemons.length < 6 && !selectedPokemons.some(p => p.id === pokemon.id)) {
+        if (selectedPokemons.length < 6 && !selectedPokemons.some(pokemon => pokemon.id === this.id)) {
             selectedPokemons.push({
-                id: pokemon.id,
-                name: pokemon.name,
-                sprites: pokemon.sprites,
-                types: pokemon.types
+                id: this.id,
+                name: this.name,
+                sprites: this.sprites,
+                types: this.types
             });
             localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));  
 
+            
             gifContainer.style.display = 'block';
             gifContainer.style.animation = 'none';
-            gifContainer.offsetHeight; // Reflow
+            gifContainer.offsetHeight; 
 
             setTimeout(() => {
                 gifContainer.style.display = 'none';     
                 showAlert('Pokémon seleccionado correctamente.');
             }, 3000);
-
+      
+            setTimeout(() => {
+                
+                location.reload();
+            }, 6000);
             this.renderSelectedPokemons();
-        } else if (selectedPokemons.some(p => p.id === pokemon.id)) {
-            const updatedPokemons = selectedPokemons.filter(p => p.id !== pokemon.id);
-            localStorage.setItem('selectedPokemons', JSON.stringify(updatedPokemons));
+        } else if (selectedPokemons.some(pokemon => pokemon.id === this.id)) {
 
+            
             gifContainer.style.display = 'block';
             gifContainer.style.animation = 'none';
-            gifContainer.offsetHeight; // Reflow
-
+            gifContainer.offsetHeight; 
             setTimeout(() => {
                 gifContainer.style.display = 'none'; 
-                showAlert('Pokémon eliminado correctamente.');
+                
+                showAlert('Este Pokémon ya está seleccionado.');
             }, 3000);
 
-            this.renderSelectedPokemons();
+            setTimeout(() => {
+                
+                location.reload();
+            }, 6000);
+            
+
         } else {
             showAlert('Ya has seleccionado 6 Pokémon.');
         }
-
-        // Cambiar el texto del botón si se han seleccionado 6 Pokémon
-        const selectButton = document.querySelector(`.select-btn[data-id="${pokemon.id}"]`);
-        if (selectedPokemons.length >= 6) {
-            selectButton.textContent = 'Eliminar';
-        } else {
-            selectButton.textContent = 'Seleccionar';
-        }
     }
 
+    removePokemon(pokemonId) {
+        let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
+        selectedPokemons = selectedPokemons.filter(pokemon => pokemon.id !== pokemonId);
+        localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
+        this.renderSelectedPokemons();
+    }
     removePokemon(pokemonId) {
         let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         selectedPokemons = selectedPokemons.filter(pokemon => pokemon.id !== pokemonId);
@@ -375,20 +381,9 @@ class Pokemon {
             const pokemonCard = pokemonInstance.createPokemonCard(pokemon, false, true); // No expandible, mostrar botón de eliminación
             selectedContainer.appendChild(pokemonCard);
         });
-
-        // Cambiar el texto del botón si se han seleccionado 6 Pokémon
-        if (selectedPokemons.length >= 6) {
-            const selectButtons = document.querySelectorAll('.select-btn');
-            selectButtons.forEach(button => {
-                button.textContent = 'Eliminar';
-            });
-        } else {
-            const selectButtons = document.querySelectorAll('.select-btn');
-            selectButtons.forEach(button => {
-                button.textContent = 'Seleccionar';
-            });
-        }
     }
+    
 }
+
 
 export default Pokemon;
