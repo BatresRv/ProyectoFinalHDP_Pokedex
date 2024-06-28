@@ -105,14 +105,13 @@ class Pokemon {
         if (showRemoveButton) {
             const removeButton = document.createElement('button');
             removeButton.className = 'remove-btn';
-            removeButton.textContent = 'Liberar';
+
             removeButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 this.removePokemon(this.id);
             });
             pokemonCard.appendChild(removeButton);
         }
-
         return pokemonCard;
     }
 
@@ -295,7 +294,7 @@ class Pokemon {
         }
     }
 
-    // Método para seleccionar un Pokémon
+
     selectPokemon(card) {
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         const messageElement = document.getElementById('messages');
@@ -312,7 +311,6 @@ class Pokemon {
         // Limpiar mensajes previos
         messageElement.innerHTML = '';
 
-        // Verificamos si aún no se han seleccionado 6 Pokémon y si el Pokémon ya ha sido seleccionado 
         if (selectedPokemons.length < 6 && !selectedPokemons.some(pokemon => pokemon.id === this.id)) {
             selectedPokemons.push({
                 id: this.id,
@@ -323,7 +321,6 @@ class Pokemon {
             localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));  
 
 
-            gifContainer.style.display = 'block';
             gifContainer.offsetHeight; 
 
             setTimeout(() => {
@@ -331,27 +328,11 @@ class Pokemon {
                 showAlert('Pokémon atrapado correctamente.');
             }, 3000);
 
-            setTimeout(() => {
-                location.reload();
-            }, 6000);
-
-            this.renderSelectedPokemons();
-
         } else if (selectedPokemons.some(pokemon => pokemon.id === this.id)) {
 
+            
             gifContainer.style.display = 'block';
 
-            setTimeout(() => {
-                gifContainer.style.display = 'none'; 
-                showAlert('Este Pokémon no se pudo atrapar.');
-            }, 3000);
-
-            setTimeout(() => {
-                location.reload();
-            }, 6000);
-
-        } else {
-            showAlert('Ya has capturado 6 Pokémon.');
         }
         
     }
@@ -368,6 +349,12 @@ class Pokemon {
         localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
 
         // Volvemos a renderizar los Pokémon 
+        this.renderSelectedPokemons();
+    }
+    removePokemon(pokemonId) {
+        let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
+        selectedPokemons = selectedPokemons.filter(pokemon => pokemon.id !== pokemonId);
+        localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
         this.renderSelectedPokemons();
     }
 
@@ -394,5 +381,6 @@ class Pokemon {
     }
 
 }
+
 
 export default Pokemon;
