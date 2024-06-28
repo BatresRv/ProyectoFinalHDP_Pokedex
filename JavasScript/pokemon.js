@@ -233,6 +233,70 @@ class Pokemon {
             });
         }, 0);
     }
+
+    selectPokemon(card) {
+        const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
+        const messageElement = document.getElementById('messages');
+        const gifContainer = document.getElementById('gif-container');
+
+        function showAlert(message) {
+            messageElement.innerHTML = message;
+            messageElement.classList.add('show');
+            setTimeout(() => {
+                messageElement.classList.remove('show');
+            }, 3000); // Ocultar después de 3 segundos
+        }
+
+        // Limpiar mensajes previos
+        messageElement.innerHTML = '';
+
+        if (selectedPokemons.length < 6 && !selectedPokemons.some(pokemon => pokemon.id === this.id)) {
+            selectedPokemons.push({
+                id: this.id,
+                name: this.name,
+                sprites: this.sprites,
+                types: this.types
+            });
+            localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));  
+
+            
+            gifContainer.style.display = 'block';
+            gifContainer.style.animation = 'none';
+            gifContainer.offsetHeight; 
+
+            setTimeout(() => {
+                gifContainer.style.display = 'none';     
+                showAlert('Pokémon seleccionado correctamente.');
+            }, 3000);
+      
+            setTimeout(() => {
+                
+                location.reload();
+            }, 6000);
+            this.renderSelectedPokemons();
+        } else if (selectedPokemons.some(pokemon => pokemon.id === this.id)) {
+
+            
+            gifContainer.style.display = 'block';
+            gifContainer.style.animation = 'none';
+            gifContainer.offsetHeight; 
+            setTimeout(() => {
+                gifContainer.style.display = 'none'; 
+                
+                showAlert('Este Pokémon ya está seleccionado.');
+            }, 3000);
+
+            setTimeout(() => {
+                
+                location.reload();
+            }, 6000);
+            
+
+        } else {
+            showAlert('Ya has seleccionado 6 Pokémon.');
+        }
+        
+    }
     
     removePokemon(pokemonId) {
         let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
