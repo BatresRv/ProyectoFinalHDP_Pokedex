@@ -17,12 +17,8 @@ class Pokedex {
         });
     }
 
-    async drawPokedex() {
+    async dibujarPokedex() {
         await this.fetchPokemons();
-        this.#renderPokedex();
-    }
-
-    #renderPokedex() {
         const container = document.createElement('div');
         container.className = 'pokedex-container';
 
@@ -31,6 +27,19 @@ class Pokedex {
         });
 
         document.body.appendChild(container);
+    }
+
+    renderSelectedPokemons() {
+        const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
+        const selectedContainer = document.querySelector('.selected-pokemons');
+
+        selectedContainer.innerHTML = '';
+
+        selectedPokemons.forEach(pokemon => {
+            const pokemonInstance = new Pokemon(pokemon.id, pokemon.name, pokemon.sprites, pokemon.types);
+            const pokemonCard = pokemonInstance.render(false, true); // No expandible, mostrar botón de eliminación
+            selectedContainer.appendChild(pokemonCard);
+        });
     }
 }
 

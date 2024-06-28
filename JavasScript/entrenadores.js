@@ -23,7 +23,6 @@ async function initializeTrainers() {
 }
 
 async function renderSelectedPokemons() {
-    // Asumiremos que selectedPokemons se manejan aún en localStorage
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     const selectedContainer = document.querySelector('.selected-pokemons');
 

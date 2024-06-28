@@ -48,32 +48,32 @@ class Pokemon {
         }
     }
 
-    createPokemonCard(pokemon, expandable = true, showRemoveButton = false) {
+    createPokemonCard(expandable = true, showRemoveButton = false) {
         const pokemonCard = document.createElement('div');
-        pokemonCard.className = `pokemon-card ${pokemon.types[0].type.name}`;
-        pokemonCard.style.backgroundColor = getTypeColor(pokemon.types[0].type.name);
+        pokemonCard.className = `pokemon-card ${this.types[0].type.name}`;
+        pokemonCard.style.backgroundColor = getTypeColor(this.types[0].type.name);
 
         if (expandable) {
             pokemonCard.addEventListener('click', () => this.expandCard(pokemonCard));
         }
 
         const pokemonImage = document.createElement('img');
-        pokemonImage.src = pokemon.sprites.front_default;
-        pokemonImage.alt = pokemon.name;
+        pokemonImage.src = this.sprites.front_default;
+        pokemonImage.alt = this.name;
 
         const pokemonName = document.createElement('h3');
-        pokemonName.textContent = pokemon.name;
+        pokemonName.textContent = this.name;
 
         const idContainer = document.createElement('div');
         idContainer.className = 'id-container';
         const pokemonId = document.createElement('span');
-        pokemonId.textContent = pokemon.id;
+        pokemonId.textContent = this.id;
         idContainer.appendChild(pokemonId);
 
         const typesContainer = document.createElement('div');
         typesContainer.className = 'types-container';
 
-        pokemon.types.forEach(type => {
+        this.types.forEach(type => {
             const typeCircle = document.createElement('div');
             typeCircle.className = 'type-circle';
             typeCircle.textContent = type.type.name;
@@ -103,7 +103,7 @@ class Pokemon {
             removeButton.textContent = 'Eliminar';
             removeButton.addEventListener('click', (event) => {
                 event.stopPropagation();
-                this.removePokemon(pokemon.id);
+                this.removePokemon(this.id);
             });
             pokemonCard.appendChild(removeButton);
         }
@@ -111,8 +111,8 @@ class Pokemon {
         return pokemonCard;
     }
 
-    render() {
-        return this.createPokemonCard(this);
+    render(expandable = true, showRemoveButton = false) {
+        return this.createPokemonCard(expandable, showRemoveButton);
     }
 
     async expandCard(card) {
@@ -258,9 +258,8 @@ class Pokemon {
         selectedContainer.innerHTML = '';
 
         selectedPokemons.forEach(pokemon => {
-            // Crea una nueva instancia de Pokemon para usar el método createPokemonCard
             const pokemonInstance = new Pokemon(pokemon.id, pokemon.name, pokemon.sprites, pokemon.types);
-            const pokemonCard = pokemonInstance.createPokemonCard(pokemon, false, true); // No expandible, mostrar botón de eliminación
+            const pokemonCard = pokemonInstance.render(false, true); // No expandible, mostrar botón de eliminación
             selectedContainer.appendChild(pokemonCard);
         });
     }
