@@ -127,7 +127,7 @@ function createTrainerCard(trainer) {
         img.alt = pokemon.name;
 
         const removeButton = document.createElement('button');
-        removeButton.textContent = 'Eliminar';
+        removeButton.textContent = 'Regresar';
         removeButton.className = 'remove-button';
         removeButton.addEventListener('click', () => {
             removePokemonFromTrainer(trainer.id, index);

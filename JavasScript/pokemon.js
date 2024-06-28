@@ -91,7 +91,7 @@ class Pokemon {
 
         selectButton.addEventListener('click', (event) => {
             event.stopPropagation();
-            this.selectPokemon(pokemonCard);
+            this.selectPokemon(pokemon);
         });
 
         pokemonCard.appendChild(pokemonImage);
@@ -294,7 +294,7 @@ class Pokemon {
         }
     }
 
-    selectPokemon(card) {
+    selectPokemon(pokemon) {
         const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
         const messageElement = document.getElementById('messages');
         const gifContainer = document.getElementById('gif-container');
@@ -310,50 +310,49 @@ class Pokemon {
         // Limpiar mensajes previos
         messageElement.innerHTML = '';
 
-        if (selectedPokemons.length < 6 && !selectedPokemons.some(pokemon => pokemon.id === this.id)) {
+        if (selectedPokemons.length < 6 && !selectedPokemons.some(p => p.id === pokemon.id)) {
             selectedPokemons.push({
-                id: this.id,
-                name: this.name,
-                sprites: this.sprites,
-                types: this.types
+                id: pokemon.id,
+                name: pokemon.name,
+                sprites: pokemon.sprites,
+                types: pokemon.types
             });
             localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));  
 
-            
             gifContainer.style.display = 'block';
             gifContainer.style.animation = 'none';
-            gifContainer.offsetHeight; 
+            gifContainer.offsetHeight; // Reflow
 
             setTimeout(() => {
                 gifContainer.style.display = 'none';     
                 showAlert('Pokémon seleccionado correctamente.');
             }, 3000);
-      
-            setTimeout(() => {
-                
-                location.reload();
-            }, 6000);
-            this.renderSelectedPokemons();
-        } else if (selectedPokemons.some(pokemon => pokemon.id === this.id)) {
 
-            
+            this.renderSelectedPokemons();
+        } else if (selectedPokemons.some(p => p.id === pokemon.id)) {
+            const updatedPokemons = selectedPokemons.filter(p => p.id !== pokemon.id);
+            localStorage.setItem('selectedPokemons', JSON.stringify(updatedPokemons));
+
             gifContainer.style.display = 'block';
             gifContainer.style.animation = 'none';
-            gifContainer.offsetHeight; 
+            gifContainer.offsetHeight; // Reflow
+
             setTimeout(() => {
                 gifContainer.style.display = 'none'; 
-                
-                showAlert('Este Pokémon ya está seleccionado.');
+                showAlert('Pokémon eliminado correctamente.');
             }, 3000);
 
-            setTimeout(() => {
-                
-                location.reload();
-            }, 6000);
-            
-
+            this.renderSelectedPokemons();
         } else {
             showAlert('Ya has seleccionado 6 Pokémon.');
+        }
+
+        // Cambiar el texto del botón si se han seleccionado 6 Pokémon
+        const selectButton = document.querySelector(`.select-btn[data-id="${pokemon.id}"]`);
+        if (selectedPokemons.length >= 6) {
+            selectButton.textContent = 'Eliminar';
+        } else {
+            selectButton.textContent = 'Seleccionar';
         }
     }
 
@@ -376,6 +375,19 @@ class Pokemon {
             const pokemonCard = pokemonInstance.createPokemonCard(pokemon, false, true); // No expandible, mostrar botón de eliminación
             selectedContainer.appendChild(pokemonCard);
         });
+
+        // Cambiar el texto del botón si se han seleccionado 6 Pokémon
+        if (selectedPokemons.length >= 6) {
+            const selectButtons = document.querySelectorAll('.select-btn');
+            selectButtons.forEach(button => {
+                button.textContent = 'Eliminar';
+            });
+        } else {
+            const selectButtons = document.querySelectorAll('.select-btn');
+            selectButtons.forEach(button => {
+                button.textContent = 'Seleccionar';
+            });
+        }
     }
 }
 
