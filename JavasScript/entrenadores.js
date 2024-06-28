@@ -9,16 +9,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function initializeTrainers() {
     const initialTrainers = [
-        { id: 1, name: 'Orlando', pokemons: [] },
-        { id: 2, name: 'Marvin', pokemons: [] },
-        { id: 3, name: 'Antolino', pokemons: [] },
-        { id: 4, name: 'Alisson', pokemons: [] },
-        { id: 5, name: 'Yosselin', pokemons: [] },
+        { id: 1, name: 'Orlando', group: 'Sabiduría', pokemons: [] },
+        { id: 2, name: 'Marvin', group: 'Instinto', pokemons: [] },
+        { id: 3, name: 'Antolino', group: 'Valor', pokemons: [] },
+        { id: 4, name: 'Alisson', group: 'Sabiduría', pokemons: [] },
+        { id: 5, name: 'Yosselin', group: 'Instinto', pokemons: [] },
     ];
 
-    const trainers = await getTrainers();
+    let trainers = await getTrainers();
     if (trainers.length === 0) {
         initialTrainers.forEach(trainer => addTrainer(trainer));
+    } else {
+        trainers = trainers.map(trainer => {
+            if (!trainer.group) {
+                const initialTrainer = initialTrainers.find(it => it.id === trainer.id);
+                if (initialTrainer) {
+                    trainer.group = initialTrainer.group;
+                    updateTrainer(trainer);
+                }
+            }
+            return trainer;
+        });
     }
 }
 
@@ -81,13 +92,17 @@ async function renderTrainers() {
 
 function createTrainerCard(trainer) {
     const trainerCard = document.createElement('div');
-    trainerCard.className = 'trainer-card';
+    const teamName = trainer.group.toLowerCase();
+    trainerCard.className = `trainer-card ${teamName}`;
 
     const trainerName = document.createElement('h3');
     trainerName.textContent = trainer.name;
 
     const trainerId = document.createElement('span');
     trainerId.textContent = `ID: ${trainer.id}`;
+
+    const trainerGroup = document.createElement('h3');
+    trainerGroup.textContent = `Grupo: ${trainer.group}`;
 
     const assignButton = document.createElement('button');
     assignButton.textContent = 'Asignar Pokémon';
@@ -116,6 +131,7 @@ function createTrainerCard(trainer) {
 
     trainerCard.appendChild(trainerName);
     trainerCard.appendChild(trainerId);
+    trainerCard.appendChild(trainerGroup);
     trainerCard.appendChild(assignButton);
     trainerCard.appendChild(pokemonList);
 
