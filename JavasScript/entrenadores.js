@@ -95,17 +95,26 @@ function createTrainerCard(trainer) {
     const teamName = trainer.group.toLowerCase();
     trainerCard.className = `trainer-card ${teamName}`;
 
-    const trainerName = document.createElement('h3');
-    trainerName.textContent = trainer.name;
-
     const trainerId = document.createElement('span');
     trainerId.textContent = `ID: ${trainer.id}`;
+    trainerId.className = 'trainer-id';
+
+    const trainerImg = document.createElement('img');
+    trainerImg.src = getTrainerImage(trainer.id);
+    trainerImg.alt = `${trainer.name}`;
+    trainerImg.className = 'trainer-img';
+
+    const trainerName = document.createElement('h3');
+    trainerName.textContent = trainer.name;
+    trainerName.className = 'trainer-name';
 
     const trainerGroup = document.createElement('h3');
     trainerGroup.textContent = `Grupo: ${trainer.group}`;
+    trainerGroup.className = 'trainer-group';
 
     const assignButton = document.createElement('button');
     assignButton.textContent = 'Asignar Pokémon';
+    assignButton.className = 'assign-button';
     assignButton.addEventListener('click', () => {
         assignPokemonToTrainer(trainer.id);
     });
@@ -119,6 +128,7 @@ function createTrainerCard(trainer) {
 
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Eliminar';
+        removeButton.className = 'remove-button';
         removeButton.addEventListener('click', () => {
             removePokemonFromTrainer(trainer.id, index);
         });
@@ -129,13 +139,31 @@ function createTrainerCard(trainer) {
         pokemonList.appendChild(listItem);
     });
 
-    trainerCard.appendChild(trainerName);
     trainerCard.appendChild(trainerId);
+    trainerCard.appendChild(trainerImg);
+    trainerCard.appendChild(trainerName);
     trainerCard.appendChild(trainerGroup);
     trainerCard.appendChild(assignButton);
     trainerCard.appendChild(pokemonList);
 
     return trainerCard;
+}
+
+function getTrainerImage(trainerId) {
+    switch (trainerId) {
+        case 1:
+            return 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRlhoyv6F8AaCuul_6acYawIPAhV8gHy6iXMasP6RyFZVXjBk5Y';
+        case 2:
+            return 'https://e7.pngegg.com/pngimages/967/12/png-clipart-pokemon-black-2-and-white-2-pokemon-black-white-pokemon-gold-and-silver-trainer-video-game-pokemon-thumbnail.png';
+        case 3:
+            return 'https://c3.klipartz.com/pngpicture/730/726/sticker-png-brock.png';
+        case 4:
+            return 'https://w7.pngwing.com/pngs/541/272/png-transparent-pokemon-trainer-pixel-art-sprite-pokemon-fictional-character-hatsune-miku-pokemon.png';
+        case 5:
+            return 'https://w7.pngwing.com/pngs/866/98/png-transparent-hatsune-miku-vocaloid-pixel-art-yeah-you-can-fictional-character-hatsune-miku-art.png';
+        default:
+            return '';
+    }
 }
 
 async function assignPokemonToTrainer(trainerId) {

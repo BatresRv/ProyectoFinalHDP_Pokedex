@@ -90,11 +90,8 @@ hr {
     }
     .footer-section img.moving-image:hover{
         box-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00; 
-    transition: all 0.5s ease-in-out;
-
-
+        transition: all 0.5s ease-in-out;
     }
-
 }
 
 .clas-text-h4:hover{
@@ -116,8 +113,7 @@ hr {
     border-radius: 10px;
     box-shadow: 10px 10px 10px rgba(40, 58, 47, 0.5);
     background-color: rgb(46, 42, 45);
-    cursor: pointer; /* MANO COMO CURSOR*/
-    
+    cursor: pointer; /* MANO COMO CURSOR */
 }
 
 .ul-foot:hover{
@@ -126,16 +122,14 @@ hr {
     border-radius: 10px;
     box-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00; 
 }
-    
 
-hr{
+hr {
     width: 100%;
     height: 1px;
     border: 10;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin: 20px 0;
 }
-
 
 .selected-pokemons {
     display: grid; 
@@ -152,7 +146,6 @@ hr{
     cursor: pointer;
     line-height: 1.5;
     font-family: 'Times New Roman', serif; /* Reemplaza con el valor de tipografia-tex.$font-ancient-text */
-
     padding: 20px;
     border-radius: 50px; /* Asumiendo que .borde_redondeado_50px es border-radius: 50px; */
 }
@@ -172,7 +165,6 @@ hr{
     transform: translate(18px);
     transition: 100ms;
 }
-
 
 /* Estilos básicos */
 body {
@@ -206,12 +198,6 @@ label, input {
     margin-bottom: 10px;
 }
 
-
-
-
-
-
-
 h1#typing {
     font-size: 2em;
     margin: 20px 0;
@@ -225,7 +211,10 @@ h1#typing {
 }
 
 .trainers-container {
-    background-color: white;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Muestra dos tarjetas por fila */
+    gap: 20px; /* Espacio entre las tarjetas */
+    background-color: transparent;
     color: #333;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -235,12 +224,52 @@ h1#typing {
     min-width: 45%;
 }
 
-.selected-pokemons {
-    order: 1;
+/* Estilos básicos */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.trainers-container {
-    order: 2;
+header, main {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+}
+
+#add-companion {
+    margin-top: 50px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+label, input {
+    margin-bottom: 10px;
+}
+
+h1#typing {
+    font-size: 2em;
+    margin: 20px 0;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: #333;
+}
+
+.selected-pokemons {
+    order: 1;
 }
 
 .selected-pokemon-card, .trainer-card {
@@ -252,6 +281,7 @@ h1#typing {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 
 .selected-pokemon-card img, .trainer-pokemon-image {
@@ -279,11 +309,9 @@ h1#typing {
 }
 
 .remove-btn {
-    
     background-color: #3e3e3e;
     color: #ffffff; 
     font-weight: bold; /* Texto en negrita */
-
     border: 2px solid #000000; /* Borde negro de 2px */
     padding: 10px 20px;
     font-family: "Arial", sans-serif; /* Tipografía similar a la usada en Pokémon */
@@ -296,13 +324,9 @@ h1#typing {
 
 .remove-btn:hover {
     font-weight: bold; /* Texto en negrita */
-
     border: 2px solid #000000; 
     background-color: #cc3333; /* Color de fondo rojo cuando se pasa el ratón */
 }
-
-
-
 
 /* Estilos para las tarjetas de entrenador */
 .trainer-card {
@@ -313,6 +337,8 @@ h1#typing {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
 }
 
 .trainer-card.sabiduría {
@@ -345,8 +371,15 @@ h1#typing {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); 
 }
 
+.trainer-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    background-color: transparent; /* Asegura que el fondo sea transparente */
+}
+
 .trainer-card h3 {
-    
     font-size: 15px;
     font-family: 'Press Start 2P', cursive; 
     color: #FFCC00; 
@@ -354,8 +387,6 @@ h1#typing {
     white-space: nowrap;
     overflow: hidden;
     border-right: 0.15em solid #FFCC00;;
-    
-
 }
 
 .trainer-card span {
@@ -370,7 +401,6 @@ h1#typing {
     background-color: rgb(255,255,0);
     color: #720b0b; 
     font-weight: bold; /* Texto en negrita */
-
     border: 2px solid #000000; /* Borde negro de 2px */
     padding: 5px 5px;
     font-family: "Arial", sans-serif; /* Tipografía similar a la usada en Pokémon */
@@ -379,7 +409,6 @@ h1#typing {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra suave */
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Transición suave */
-
 }
 
 .trainer-card button:hover {
@@ -395,6 +424,10 @@ h1#typing {
     margin-top: 12px;
 }
 
+.trainer-card ul li {
+    display: flex;
+    align-items: center;
+}
 
 .trainer-card ul li img {
     width: 50px;
@@ -451,7 +484,7 @@ h1#typing {
     margin-bottom: 10px;
 }
 
-.entrenadores-text{
+.entrenadores-text {
     block-size: auto;
     font-size: 30px;
     font-family: 'Press Start 2P', cursive; 
@@ -461,7 +494,6 @@ h1#typing {
     overflow: hidden;
     border-right: 0.15em solid #FFCC00;;
     animation: typing 5s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
-
 }
 
 .comp {
