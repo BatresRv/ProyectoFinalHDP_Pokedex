@@ -536,4 +536,50 @@ h1#typing {
 .tab-content.active {
     display: block;
 }
+#messages {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    display: none;
+    z-index: 1000;
+}
 
+#messages.show {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#gif-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.add-trainer-button{
+    background-color: rgb(255,255,0);
+    color: #720b0b; 
+    font-weight: bold;
+    border: 2px solid #000000;
+    padding: 5px 5px;
+    font-family: "Arial", sans-serif;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); 
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
