@@ -5,7 +5,7 @@
         transform: translateX(0);
     }
     100% {
-        transform: translateX(calc(100vw - 50px)); /* Ajusta el valor para que coincida con la posición final */
+        transform: translateX(calc(100vw - 50px)); 
     }
 }
 
@@ -91,10 +91,7 @@ hr {
     .footer-section img.moving-image:hover{
         box-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00; 
     transition: all 0.5s ease-in-out;
-
-
     }
-
 }
 
 .clas-text-h4:hover{
@@ -144,35 +141,33 @@ hr{
 
 .pokedex-container {
     padding: 17px 40px; 
-    background-color: #FF4500; /* Reemplaza con el valor de colores.$color-nami */
-    box-shadow: 0 0 8px #000000; /* Reemplaza con el valor de colores.$color-negro */
+    background-color: #FF4500; 
+    box-shadow: 0 0 8px #000000; 
     text-transform: uppercase;
     font-size: 14px;
     transition: all 0.05s ease;
     cursor: pointer;
     line-height: 1.5;
-    font-family: 'Times New Roman', serif; /* Reemplaza con el valor de tipografia-tex.$font-ancient-text */
-
+    font-family: 'Times New Roman', serif; 
     padding: 20px;
-    border-radius: 50px; /* Asumiendo que .borde_redondeado_50px es border-radius: 50px; */
+    border-radius: 50px; 
 }
 
 .pokedex-container:hover {
     line-height: 3px;
-    background-color: #FF4500; /* Reemplaza con el valor de colores.$color-nami */
-    color: #FFA500; /* Reemplaza con el valor de colores.$color-secundario */
-    box-shadow: 0 7px 29px 0 #000000; /* Reemplaza con el valor de colores.$color-negro */
+    background-color: #FF4500;
+    color: #FFA500; 
+    box-shadow: 0 7px 29px 0 #000000; 
 }
 
 .pokedex-container:active {
     line-height: 3px;
-    background-color: #FF4500; /* Reemplaza con el valor de colores.$color-nami */
-    color: #FFA500; /* Reemplaza con el valor de colores.$color-secundario */
-    box-shadow: 0 0 0 0 #000000; /* Reemplaza con el valor de colores.$color-negro */
+    background-color: #FF4500;
+    color: #FFA500; 
+    box-shadow: 0 0 0 0 #000000; 
     transform: translate(18px);
     transition: 100ms;
 }
-
 
 /* Estilos básicos */
 body {
@@ -205,12 +200,6 @@ form {
 label, input {
     margin-bottom: 10px;
 }
-
-
-
-
-
-
 
 h1#typing {
     font-size: 2em;
@@ -282,23 +271,21 @@ h1#typing {
     
     background-color: #3e3e3e;
     color: #ffffff; 
-    font-weight: bold; /* Texto en negrita */
-
-    border: 2px solid #000000; /* Borde negro de 2px */
+    font-weight: bold; 
+    border: 2px solid #000000; 
     padding: 10px 20px;
-    font-family: "Arial", sans-serif; /* Tipografía similar a la usada en Pokémon */
+    font-family: "Arial", sans-serif; 
     font-size: 16px;
-    border-radius: 5px; /* Esquinas redondeadas */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); 
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Transición suave */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; 
 }
 
 .remove-btn:hover {
-    font-weight: bold; /* Texto en negrita */
-
+    font-weight: bold; 
     border: 2px solid #000000; 
-    background-color: #cc3333; /* Color de fondo rojo cuando se pasa el ratón */
+    background-color: #cc3333; 
 }
 
 
@@ -337,25 +324,30 @@ h1#typing {
 
 .trainer-card.instinto {
     border: 2px solid yellow;
+    background-color: rgba(0, 0, 0, 0.5);
     background-image: url('../Imgs/instinto.jpeg');
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat; 
     color: white; 
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); 
-}
+} 
+
 
 .trainer-card h3 {
-    
-    font-size: 15px;
-    font-family: 'Press Start 2P', cursive; 
-    color: #FFCC00; 
-    text-shadow: 2px 2px 0 #3333CC, 4px 4px 0 #FF0000; 
+    font-size: 18px;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
     white-space: nowrap;
     overflow: hidden;
-    border-right: 0.15em solid #FFCC00;;
-    
-
+    text-overflow: ellipsis;
+    -webkit-text-stroke: 1px black; 
+    text-stroke: 0.5px black; 
+    -webkit-text-fill-color: white;
+    text-fill-color: white;
 }
 
 .trainer-card span {
@@ -369,24 +361,23 @@ h1#typing {
 .trainer-card button {
     background-color: rgb(255,255,0);
     color: #720b0b; 
-    font-weight: bold; /* Texto en negrita */
-
-    border: 2px solid #000000; /* Borde negro de 2px */
+    font-weight: bold; 
+    border: 2px solid #000000; 
     padding: 5px 5px;
-    font-family: "Arial", sans-serif; /* Tipografía similar a la usada en Pokémon */
+    font-family: "Arial", sans-serif;
     font-size: 16px;
-    border-radius: 5px; /* Esquinas redondeadas */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Transición suave */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; 
 
 }
 
 .trainer-card button:hover {
-    font-weight: bold; /* Texto en negrita */
+    font-weight: bold; 
     color: rgb(255,255,0);
     border: 2px solid #000000; 
-    background-color: #0b3aa0; /* Color de fondo rojo cuando se pasa el ratón */
+    background-color: #0b3aa0; 
 }
 
 .trainer-card ul {
@@ -454,14 +445,11 @@ h1#typing {
 .entrenadores-text{
     block-size: auto;
     font-size: 30px;
-    font-family: 'Press Start 2P', cursive; 
-    color: #FFCC00; 
-    text-shadow: 2px 2px 0 #3333CC, 4px 4px 0 #FF0000; 
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 0.15em solid #FFCC00;;
-    animation: typing 5s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
-
+    background-color: #cccccc81;
+    font-family: 'Arial', cursive; 
+    color: #0e0f5a; 
+    text-shadow: 2px 2px 0 #ffffff; 
+    
 }
 
 .comp {
@@ -472,5 +460,4 @@ h1#typing {
     white-space: nowrap;
     overflow: hidden;
     border-right: 0.15em solid #FFCC00;;
-    animation: typing 5s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
 }
