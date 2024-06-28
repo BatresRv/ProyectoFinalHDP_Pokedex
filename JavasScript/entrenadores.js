@@ -69,26 +69,17 @@ function createTrainerCard(trainer) {
     const teamName = trainer.group.toLowerCase();
     trainerCard.className = `trainer-card ${teamName}`;
 
-    const trainerId = document.createElement('span');
-    trainerId.textContent = `ID: ${trainer.id}`;
-    trainerId.className = 'trainer-id';
-
-    const trainerImg = document.createElement('img');
-    trainerImg.src = getTrainerImage(trainer.id);
-    trainerImg.alt = `${trainer.name}`;
-    trainerImg.className = 'trainer-img';
-
     const trainerName = document.createElement('h3');
     trainerName.textContent = trainer.name;
-    trainerName.className = 'trainer-name';
+
+    const trainerId = document.createElement('span');
+    trainerId.textContent = `ID: ${trainer.id}`;
 
     const trainerGroup = document.createElement('h3');
     trainerGroup.textContent = `Grupo: ${trainer.group}`;
-    trainerGroup.className = 'trainer-group';
 
     const assignButton = document.createElement('button');
     assignButton.textContent = 'Asignar Pokémon';
-    assignButton.className = 'assign-button';
     assignButton.addEventListener('click', () => {
         assignPokemonToTrainer(trainer.id);
     });
@@ -102,7 +93,6 @@ function createTrainerCard(trainer) {
 
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Eliminar';
-        removeButton.className = 'remove-button';
         removeButton.addEventListener('click', () => {
             removePokemonFromTrainer(trainer.id, index);
         });
@@ -113,9 +103,8 @@ function createTrainerCard(trainer) {
         pokemonList.appendChild(listItem);
     });
 
-    trainerCard.appendChild(trainerId);
-    trainerCard.appendChild(trainerImg);
     trainerCard.appendChild(trainerName);
+    trainerCard.appendChild(trainerId);
     trainerCard.appendChild(trainerGroup);
     trainerCard.appendChild(assignButton);
     trainerCard.appendChild(pokemonList);
@@ -123,7 +112,7 @@ function createTrainerCard(trainer) {
     return trainerCard;
 }
 
-
+// Función para asignar un Pokémon a un entrenador
 async function assignPokemonToTrainer(trainerId) {
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     const trainers = await getTrainers();
