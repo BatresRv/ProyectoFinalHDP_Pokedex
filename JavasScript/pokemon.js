@@ -59,7 +59,10 @@ class Pokemon {
         pokemonCard.style.backgroundColor = getTypeColor(this.types[0].type.name);
 
         if (expandable) {
-            pokemonCard.addEventListener('click', () => this.expandCard(pokemonCard));
+            pokemonCard.addEventListener('click', (event) => {
+                event.stopPropagation();
+                this.expandCard(pokemonCard);
+            });
         }
 
         const pokemonImage = document.createElement('img');
@@ -127,12 +130,15 @@ class Pokemon {
             card.classList.remove('expanded');
             card.style.width = '';
             card.style.height = '';
-            card.querySelector('.details').remove();
+            const details = card.querySelector('.details');
+            if (details) {
+                details.remove();
+            }
             card.querySelector('.select-btn').style.display = 'none'; // Ocultar el botón cuando se contrae
             return;
         }
 
-        // Obteniendo la posición actual de la tarjeta seleccionada
+
         const cardRect = card.getBoundingClientRect();
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
@@ -141,10 +147,6 @@ class Pokemon {
 
         const detailsContainer = document.createElement('div');
         detailsContainer.className = 'details';
-
-        // Sección About
-        const aboutSection = document.createElement('div');
-        aboutSection.className = 'about-section';
 
         const speciesItem = document.createElement('p');
         speciesItem.textContent = `Species: ${this.species} 🦸‍♂️`;
@@ -168,19 +170,10 @@ class Pokemon {
 
         detailsContainer.appendChild(aboutSection);
 
-        // Sección Stats y Moves
-        const statsMovesSection = document.createElement('div');
-        statsMovesSection.className = 'stats-moves-section';
-
-        const statsTitle = document.createElement('h4');
-        statsTitle.textContent = '📊 Stats:';
-        statsMovesSection.appendChild(statsTitle);
-
         const statsList = document.createElement('ul');
         this.stats.forEach(stat => {
             const statItem = document.createElement('li');
 
-            // Creando la barra de progreso
             const progressBarContainer = document.createElement('div');
             progressBarContainer.className = 'progress-bar-container';
 
@@ -188,7 +181,7 @@ class Pokemon {
             progressBar.className = 'progress-bar';
             progressBar.style.width = `${stat.base_stat}%`;
 
-            // Cambiando el color según el valor
+
             if (stat.base_stat < 50) {
                 progressBar.classList.add('low');
             } else {
@@ -197,17 +190,12 @@ class Pokemon {
 
             progressBarContainer.appendChild(progressBar);
 
-            // Añadiendo el nombre del stat y la barra
             statItem.textContent = `${stat.stat.name}: ${stat.base_stat}`;
             statItem.appendChild(progressBarContainer);
 
             statsList.appendChild(statItem);
         });
-        statsMovesSection.appendChild(statsList);
 
-        const movesTitle = document.createElement('h4');
-        movesTitle.textContent = '📜 Moves:';
-        statsMovesSection.appendChild(movesTitle);
 
         const movesList = document.createElement('ul');
         this.moves.slice(0, 5).forEach(move => {
@@ -215,15 +203,11 @@ class Pokemon {
             moveItem.textContent = move.move.name;
             movesList.appendChild(moveItem);
         });
-        statsMovesSection.appendChild(movesList);
-
-        detailsContainer.appendChild(statsMovesSection);
 
         card.appendChild(detailsContainer);
 
         card.querySelector('.select-btn').style.display = 'block'; // Mostrar el botón cuando se expande
 
-        // Ajustando el scroll para que la tarjeta expandida esté visible
         const expandedCardRect = card.getBoundingClientRect();
         const scrollTarget = scrollTop + (expandedCardRect.top - cardRect.top);
 
@@ -232,13 +216,26 @@ class Pokemon {
             behavior: 'smooth' // Desplazamiento instantáneo
         });
 
-        // Reflow para activar la animación de la barra de progreso
         setTimeout(() => {
             const progressBars = card.querySelectorAll('.progress-bar');
             progressBars.forEach(bar => {
                 bar.style.width = bar.style.width; // Reaplicando el ancho para activar la animación
             });
         }, 0);
+
+        // Mostrar la primera pestaña por defecto
+        this.showTab(detailsContainer, 'about-section');
+    }
+
+    showTab(container, tabClass) {
+        const tabs = container.querySelectorAll('.tab-content');
+        tabs.forEach(tab => {
+            tab.style.display = 'none';
+        });
+        const activeTab = container.querySelector(`.${tabClass}`);
+        if (activeTab) {
+            activeTab.style.display = 'block';
+        }
     }
 
     // Método para seleccionar un Pokémon
@@ -300,27 +297,8 @@ class Pokemon {
         } else {
             showAlert('Ya has seleccionado 6 Pokémon.');
         }
-        
     }
-    
-    // Método para eliminar un Pokémon seleccionado
-    removePokemon(pokemonId) {
-    let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || []; // Obteniendo el arreglo de Pokémon seleccionados desde el localStorage
-    selectedPokemons = selectedPokemons.filter(pokemon => pokemon.id !== pokemonId); // Filtrando el arreglo para excluir el Pokémon con el ID seleccionado
 
-    localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons)); // Actualizando el localStorage con el nuevo arreglo de Pokémon seleccionados
-    
-    this.renderSelectedPokemons();   // Vuelviendo a renderizar la lista de Pokémon 
-}
-
-    
-    // Método para renderizar los Pokémon seleccionados 
-    renderSelectedPokemons() {
-        const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || []; // Obteniedno el arreglo de Pokémon seleccionado
-        const selectedContainer = document.querySelector('.selected-pokemons'); // Seleccionando el contenedor en el que se mostrarán los Pokémon
-    
-        selectedContainer.innerHTML = ''; // Limpiando el contenedor
-        // Iterando sobre el arreglo de Pokémon seleccionados
         selectedPokemons.forEach(pokemon => {
             // Creando una nueva instancia de la clase Pokemon para cada Pokémon seleccionado
             const pokemonInstance = new Pokemon(pokemon.id, pokemon.name, pokemon.sprites, pokemon.types);
@@ -331,4 +309,4 @@ class Pokemon {
     }
     
 }
-export default Pokemon; 
+
