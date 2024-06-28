@@ -1,12 +1,14 @@
 import { addTrainer, getTrainers, updateTrainer, deleteTrainer } from './db.js';
 import Pokemon from './pokemon.js';
 
+// Esperando a que el documento este cargado
 document.addEventListener('DOMContentLoaded', () => {
-    initializeTrainers();
-    renderSelectedPokemons();
-    renderTrainers();
+    initializeTrainers(); // Inicializando a los entrenadores
+    renderSelectedPokemons(); // Renderizando los Pokémon seleccionados
+    renderTrainers(); // Renderizando los entrenadores
 });
 
+// Función para inicializar los entrenadores
 async function initializeTrainers() {
     const initialTrainers = [
         { id: 1, name: 'Orlando', group: 'Sabiduría', pokemons: [] },
@@ -18,8 +20,10 @@ async function initializeTrainers() {
 
     let trainers = await getTrainers();
     if (trainers.length === 0) {
+        // Si no hay entrenadores en la base de datos, agrega los entrenadores iniciales
         initialTrainers.forEach(trainer => addTrainer(trainer));
     } else {
+        // Si hay entrenadores, verifica si necesitan ser actualizados
         trainers = trainers.map(trainer => {
             if (!trainer.group) {
                 const initialTrainer = initialTrainers.find(it => it.id === trainer.id);
@@ -33,6 +37,7 @@ async function initializeTrainers() {
     }
 }
 
+// Función para renderizar los Pokémon seleccionados
 async function renderSelectedPokemons() {
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     const selectedContainer = document.querySelector('.selected-pokemons');
@@ -46,38 +51,7 @@ async function renderSelectedPokemons() {
     });
 }
 
-function createSelectedPokemonCard(pokemon) {
-    const card = document.createElement('div');
-    card.className = 'selected-pokemon-card';
-
-    const img = document.createElement('img');
-    img.src = pokemon.sprites.front_default;
-    img.alt = pokemon.name;
-    img.className = 'pokemon-img';
-
-    const name = document.createElement('h3');
-    name.textContent = pokemon.name;
-
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Eliminar';
-    removeButton.addEventListener('click', () => {
-        removePokemon(pokemon.id);
-    });
-
-    card.appendChild(img);
-    card.appendChild(name);
-    card.appendChild(removeButton);
-
-    return card;
-}
-
-function removePokemon(pokemonId) {
-    let selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
-    selectedPokemons = selectedPokemons.filter(pokemon => pokemon.id !== pokemonId);
-    localStorage.setItem('selectedPokemons', JSON.stringify(selectedPokemons));
-    renderSelectedPokemons();
-}
-
+// Función para renderizar los entrenadores
 async function renderTrainers() {
     const trainers = await getTrainers();
     const trainersContainer = document.querySelector('.trainers-container');
@@ -89,6 +63,7 @@ async function renderTrainers() {
     });
 }
 
+// Función para crear la tarjeta de un entrenador
 function createTrainerCard(trainer) {
     const trainerCard = document.createElement('div');
     const teamName = trainer.group.toLowerCase();
@@ -137,6 +112,7 @@ function createTrainerCard(trainer) {
     return trainerCard;
 }
 
+// Función para asignar un Pokémon a un entrenador
 async function assignPokemonToTrainer(trainerId) {
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     const trainers = await getTrainers();
@@ -168,6 +144,7 @@ async function assignPokemonToTrainer(trainerId) {
     }
 }
 
+// Función para eliminar un Pokémon de un entrenador
 async function removePokemonFromTrainer(trainerId, pokemonIndex) {
     const trainers = await getTrainers();
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
