@@ -1,14 +1,20 @@
 // Importa funciones y clases desde otros archivos
 import { addTrainer, getTrainers, updateTrainer, deleteTrainer } from './db.js';
 import Pokemon from './pokemon.js';
+<<<<<<< HEAD
 // Espera a que el DOM esté completamente cargado antes de ejecutar las funciones
+=======
+
+// Esperando a que el documento este cargado
+>>>>>>> e43e6e9df20ad1e4c824c579c148dffb4d154b4b
 document.addEventListener('DOMContentLoaded', () => {
-    initializeTrainers();
-    renderSelectedPokemons();
-    renderTrainers();
+    initializeTrainers(); // Inicializando a los entrenadores
+    renderSelectedPokemons(); // Renderizando los Pokémon seleccionados
+    renderTrainers(); // Renderizando los entrenadores
 });
 // Inicializa los entrenadores si no existen en la base de datos
 
+// Función para inicializar los entrenadores
 async function initializeTrainers() {
     const initialTrainers = [
         { id: 1, name: 'Orlando', group: 'Sabiduría', pokemons: [] },
@@ -20,9 +26,14 @@ async function initializeTrainers() {
     // Obtiene la lista de entrenadores desde la base de datos
     let trainers = await getTrainers();
     if (trainers.length === 0) {
+        // Si no hay entrenadores en la base de datos, agrega los entrenadores iniciales
         initialTrainers.forEach(trainer => addTrainer(trainer));
     } else {
+<<<<<<< HEAD
         // Actualiza los entrenadores existentes con el grupo si falta
+=======
+        // Si hay entrenadores, verifica si necesitan ser actualizados
+>>>>>>> e43e6e9df20ad1e4c824c579c148dffb4d154b4b
         trainers = trainers.map(trainer => {
             if (!trainer.group) {
                 const initialTrainer = initialTrainers.find(it => it.id === trainer.id);
@@ -35,9 +46,13 @@ async function initializeTrainers() {
         });
     }
 }
+<<<<<<< HEAD
 // Renderiza los Pokémon seleccionados desde el localStorage
+=======
+
+// Función para renderizar los Pokémon seleccionados
+>>>>>>> e43e6e9df20ad1e4c824c579c148dffb4d154b4b
 async function renderSelectedPokemons() {
-    // Asumiremos que selectedPokemons se manejan aún en localStorage
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     const selectedContainer = document.querySelector('.selected-pokemons');
 
@@ -49,6 +64,7 @@ async function renderSelectedPokemons() {
         selectedContainer.appendChild(pokemonCard);
     });
 }
+<<<<<<< HEAD
 // Crea una tarjeta HTML para un Pokémon seleccionado
 function createSelectedPokemonCard(pokemon) {
     const card = document.createElement('div');
@@ -82,6 +98,10 @@ function removePokemon(pokemonId) {
     renderSelectedPokemons();
 }
 // Renderiza la lista de entrenadores desde la base de datos
+=======
+
+// Función para renderizar los entrenadores
+>>>>>>> e43e6e9df20ad1e4c824c579c148dffb4d154b4b
 async function renderTrainers() {
     const trainers = await getTrainers();
     const trainersContainer = document.querySelector('.trainers-container');
@@ -92,23 +112,37 @@ async function renderTrainers() {
         trainersContainer.appendChild(trainerCard);
     });
 }
+<<<<<<< HEAD
 // Crea una tarjeta HTML para un entrenado
+=======
+
+// Función para crear la tarjeta de un entrenador
+>>>>>>> e43e6e9df20ad1e4c824c579c148dffb4d154b4b
 function createTrainerCard(trainer) {
     const trainerCard = document.createElement('div');
     const teamName = trainer.group.toLowerCase();
     trainerCard.className = `trainer-card ${teamName}`;
 
-    const trainerName = document.createElement('h3');
-    trainerName.textContent = trainer.name;
-
     const trainerId = document.createElement('span');
     trainerId.textContent = `ID: ${trainer.id}`;
+    trainerId.className = 'trainer-id';
+
+    const trainerImg = document.createElement('img');
+    trainerImg.src = getTrainerImage(trainer.id);
+    trainerImg.alt = `${trainer.name}`;
+    trainerImg.className = 'trainer-img';
+
+    const trainerName = document.createElement('h3');
+    trainerName.textContent = trainer.name;
+    trainerName.className = 'trainer-name';
 
     const trainerGroup = document.createElement('h3');
     trainerGroup.textContent = `Grupo: ${trainer.group}`;
+    trainerGroup.className = 'trainer-group';
 
     const assignButton = document.createElement('button');
     assignButton.textContent = 'Asignar Pokémon';
+    assignButton.className = 'assign-button';
     assignButton.addEventListener('click', () => {
         assignPokemonToTrainer(trainer.id);
     });
@@ -122,6 +156,7 @@ function createTrainerCard(trainer) {
 
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Eliminar';
+        removeButton.className = 'remove-button';
         removeButton.addEventListener('click', () => {
             removePokemonFromTrainer(trainer.id, index);
         });
@@ -132,15 +167,21 @@ function createTrainerCard(trainer) {
         pokemonList.appendChild(listItem);
     });
 
-    trainerCard.appendChild(trainerName);
     trainerCard.appendChild(trainerId);
+    trainerCard.appendChild(trainerImg);
+    trainerCard.appendChild(trainerName);
     trainerCard.appendChild(trainerGroup);
     trainerCard.appendChild(assignButton);
     trainerCard.appendChild(pokemonList);
 
     return trainerCard;
 }
+<<<<<<< HEAD
 // Asigna un Pokémon seleccionado a un entrenador
+=======
+
+
+>>>>>>> e43e6e9df20ad1e4c824c579c148dffb4d154b4b
 async function assignPokemonToTrainer(trainerId) {
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
     const trainers = await getTrainers();
@@ -171,7 +212,12 @@ async function assignPokemonToTrainer(trainerId) {
         alert('No hay Pokémon seleccionados para asignar.');
     }
 }
+<<<<<<< HEAD
 // Elimina un Pokémon de un entrenador y lo devuelve a la lista de seleccionados
+=======
+
+// Función para eliminar un Pokémon de un entrenador
+>>>>>>> e43e6e9df20ad1e4c824c579c148dffb4d154b4b
 async function removePokemonFromTrainer(trainerId, pokemonIndex) {
     const trainers = await getTrainers();
     const selectedPokemons = JSON.parse(localStorage.getItem('selectedPokemons')) || [];
